@@ -4,6 +4,7 @@ import { BenefitsSection } from './BenefitsSection'
 function App() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   
   const videos = [
     '13668624_3840_2160_25fps.mp4',
@@ -26,6 +27,17 @@ function App() {
     return () => clearInterval(interval)
   }, [videos.length])
 
+  // Add scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      setIsScrolled(scrollTop > 50) // Start transition after 50px scroll
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const handleIndicatorClick = (index) => {
     if (index === currentVideoIndex) return
     
@@ -41,10 +53,13 @@ function App() {
   return (
     <div className="App">
       {/* Header */}
-      <header className="header">
+      <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="container">
           <div className="header-content">
-            <div className="logo">DefenseConnect</div>
+            <div className="logo">
+              <div className="logo-icon"></div>
+              <span className="logo-text">BID</span>
+            </div>
             <nav>
               <ul className="nav">
                 <li><a href="#home">Home</a></li>
