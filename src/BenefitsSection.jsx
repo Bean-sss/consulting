@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge } from './components/ui/badge'
 import { Card } from './components/ui/card'
-import { Upload, Users, BarChart3, CheckCircle } from 'lucide-react'
+import { Upload, Users, BarChart3, LineChart, CheckCircle } from 'lucide-react'
 
 export function BenefitsSection() {
   return (
@@ -66,7 +66,7 @@ export function BenefitsSection() {
                 Instant vendor matches
               </h3>
               <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                Ranked shortlists in seconds—no spreadsheets required.
+                Ranked shortlists in seconds—no spreadsheets or manual filtering. Deep profiles and performance scores surface your best-fit partners instantly.
               </p>
             </div>
 
@@ -95,9 +95,23 @@ export function BenefitsSection() {
                       </div>
                     </div>
 
+                    {/* Quick Stats */}
+                    <div className="px-6 pt-6 pb-4 bg-gray-50 border-b">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="text-sm text-gray-600">Qualified Vendors</div>
+                        <span className="text-2xl font-bold text-primary">12</span>
+                      </div>
+                      {/* simple bar graph */}
+                      <div className="flex items-end h-14 gap-1">
+                        {[80,70,90,60,50,40,30].map((h,i)=>(
+                          <div key={i} className="flex-1 bg-primary/20 rounded-t" style={{height:`${h}%`}}></div>
+                        ))}
+                      </div>
+                    </div>
+
                     {/* Matching Results */}
                     <div className="p-6">
-                      <div className="text-sm text-gray-600 mb-4">Found 12 qualified vendors for your RFP</div>
+                      <div className="text-sm text-gray-600 mb-4">Top vendor matches</div>
 
                       <div className="space-y-4">
                         {/* Top Match */}
@@ -205,17 +219,29 @@ export function BenefitsSection() {
           {/* Benefit 3: Faster Project Completion */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="order-2 lg:order-1">
-              {/* Mockup: Deal Velocity Dashboard */}
-              <div className="relative max-w-lg mx-auto">
+              {/* Mockup: Pipeline Velocity Dashboard */}
+              <div className="relative max-w-xl mx-auto">
                 <Card className="p-6 shadow-2xl bg-white">
                   {/* Header */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="font-bold text-gray-900">Deal Velocity</div>
-                    <BarChart3 className="w-5 h-5 text-accent" />
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="font-bold text-gray-900">Pipeline Velocity</div>
+                    <LineChart className="w-5 h-5 text-accent" />
                   </div>
 
+                  {/* Line Graph */}
+                  <svg viewBox="0 0 160 60" className="w-full h-24 text-accent mb-6">
+                    <polyline
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      points="0,55 20,45 40,35 60,25 80,28 100,18 120,12 140,8 160,5"
+                    />
+                  </svg>
+
                   {/* Metrics */}
-                  <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="text-center">
                       <p className="text-xs text-gray-600">Traditional</p>
                       <p className="text-2xl font-bold text-red-600">6-8 wks</p>
@@ -224,12 +250,6 @@ export function BenefitsSection() {
                       <p className="text-xs text-gray-600">With AI</p>
                       <p className="text-2xl font-bold text-green-600">3 days</p>
                     </div>
-                  </div>
-
-                  {/* Simple Bar Chart */}
-                  <div className="flex items-end gap-2 h-24">
-                    <div className="flex-1 bg-red-200 rounded-t-lg" style={{ height: '80%' }}></div>
-                    <div className="flex-1 bg-green-300 rounded-t-lg" style={{ height: '20%' }}></div>
                   </div>
                 </Card>
               </div>
@@ -240,7 +260,7 @@ export function BenefitsSection() {
                 Close deals 5× faster
               </h3>
               <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                From 6-week cycles to 3-day turnarounds—see the speed on your dashboard.
+                Shrink 6-week cycles to 3-day turnarounds and watch progress in real time with live velocity charts.
               </p>
             </div>
           </div>
