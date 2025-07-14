@@ -63,145 +63,84 @@ export function BenefitsSection() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="space-y-6">
               <h3 className="text-3xl lg:text-4xl font-bold text-primary">
-                Instant vendor matches
+                Intelligence-driven vendor discovery
               </h3>
               <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed">
-                Ranked shortlists in seconds—no spreadsheets or manual filtering. Deep profiles and performance scores surface your best-fit partners instantly.
+                Our AI analyzes thousands of data points to surface the perfect partners. Real-time capability scores, security clearances, and performance metrics deliver instant qualification.
               </p>
             </div>
 
             <div>
-              {/* Mockup: Vendor Matching Dashboard */}
-              <div className="relative max-w-2xl mx-auto">
-                <div className="bg-gray-800 rounded-t-xl p-3 shadow-2xl">
+              {/* Mockup: Computer Screen with Defense Contractor Matching */}
+              <div className="relative max-w-4xl mx-auto">
+                {/* Computer Screen with Proper Bezels */}
+                <div className="bg-gray-900 rounded-t-2xl p-8 shadow-2xl border-8 border-gray-800">
                   {/* Browser Top Bar */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  <div className="flex items-center mb-6">
+                    <div className="flex gap-2 mr-4">
+                      <div className="w-4 h-4 rounded-full bg-red-500"></div>
+                      <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
+                      <div className="w-4 h-4 rounded-full bg-green-500"></div>
                     </div>
-                    <div className="flex-1 bg-gray-700 rounded px-3 py-1 ml-4">
-                      <span className="text-gray-300 text-xs">defenseconnect.com/vendors</span>
+                    <div className="flex-1 bg-gray-700 rounded-lg px-4 py-2 border border-gray-600">
+                      <span className="text-gray-300 text-sm">bid.com/vendors</span>
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-lg overflow-hidden">
-                    {/* Dashboard Header */}
-                    <div className="bg-red-600 text-white px-6 py-3">
-                      <div className="flex items-center justify-between">
-                        <div className="font-bold text-lg">DefenseConnect</div>
-                        <div className="text-sm opacity-90">Vendor Matching Results</div>
+                  <div className="bg-white rounded-lg overflow-hidden aspect-video">
+                    {/* Vendor Grid */}
+                    <div className="p-8 h-full">
+                      <div className="mb-8">
+                        <h3 className="text-3xl font-bold text-gray-900 mb-2">Vendor Matches</h3>
+                        <div className="text-base text-gray-600">Showing 3 of 47 qualified vendors</div>
                       </div>
-                    </div>
 
-                    {/* Quick Stats */}
-                    <div className="px-6 pt-6 pb-4 bg-gray-50 border-b">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="text-sm text-gray-600">Qualified Vendors</div>
-                        <span className="text-2xl font-bold text-primary">12</span>
-                      </div>
-                      {/* simple bar graph */}
-                      <div className="flex items-end h-14 gap-1">
-                        {[80,70,90,60,50,40,30].map((h,i)=>(
-                          <div key={i} className="flex-1 bg-primary/20 rounded-t" style={{height:`${h}%`}}></div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Matching Results */}
-                    <div className="p-6">
-                      <div className="text-sm text-gray-600 mb-4">Top vendor matches</div>
-
-                      <div className="space-y-4">
+                      <div className="space-y-6">
                         {/* Top Match */}
-                        <div className="border-2 border-green-200 rounded-lg overflow-hidden bg-green-50">
-                          <div className="p-4">
-                            <div className="flex items-center justify-between mb-3">
-                              <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
-                                  <Users className="w-5 h-5 text-white" />
-                                </div>
-                                <div>
-                                  <h4 className="font-bold text-gray-900">Lockheed Martin</h4>
-                                  <p className="text-sm text-gray-600">Aerospace & Defense</p>
-                                </div>
-                              </div>
-                              <Badge className="bg-green-600 text-white">98% Match</Badge>
-                            </div>
-                            <div className="grid grid-cols-3 gap-4 text-sm">
-                              <div>
-                                <span className="text-gray-600">Security:</span>
-                                <span className="font-medium ml-1">Top Secret</span>
+                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                              <div className="w-14 h-14 bg-blue-600 rounded-lg flex items-center justify-center">
+                                <span className="text-white font-bold text-xl">P</span>
                               </div>
                               <div>
-                                <span className="text-gray-600">Experience:</span>
-                                <span className="font-medium ml-1">15+ years</span>
-                              </div>
-                              <div>
-                                <span className="text-gray-600">Past Performance:</span>
-                                <span className="font-medium ml-1">Excellent</span>
+                                <h4 className="font-bold text-gray-900 text-lg">Palantir Technologies</h4>
+                                <p className="text-gray-600">Data Analytics & AI Platform</p>
                               </div>
                             </div>
+                            <div className="text-3xl font-bold text-blue-600">97%</div>
                           </div>
                         </div>
 
-                        {/* Other Matches */}
-                        <div className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                          <div className="flex items-center justify-between mb-3">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                                <Users className="w-5 h-5 text-white" />
+                        {/* Second Match */}
+                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                              <div className="w-14 h-14 bg-gray-800 rounded-lg flex items-center justify-center">
+                                <span className="text-white font-bold text-xl">L</span>
                               </div>
                               <div>
-                                <h4 className="font-bold text-gray-900">Boeing Defense</h4>
-                                <p className="text-sm text-gray-600">Defense Systems</p>
+                                <h4 className="font-bold text-gray-900 text-lg">Lockheed Martin</h4>
+                                <p className="text-gray-600">Aerospace & Defense Systems</p>
                               </div>
                             </div>
-                            <Badge variant="secondary">95% Match</Badge>
-                          </div>
-                          <div className="grid grid-cols-3 gap-4 text-sm">
-                            <div>
-                              <span className="text-gray-600">Security:</span>
-                              <span className="font-medium ml-1">Secret</span>
-                            </div>
-                            <div>
-                              <span className="text-gray-600">Experience:</span>
-                              <span className="font-medium ml-1">12+ years</span>
-                            </div>
-                            <div>
-                              <span className="text-gray-600">Past Performance:</span>
-                              <span className="font-medium ml-1">Very Good</span>
-                            </div>
+                            <div className="text-3xl font-bold text-gray-600">94%</div>
                           </div>
                         </div>
 
-                        <div className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                          <div className="flex items-center justify-between mb-3">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
-                                <Users className="w-5 h-5 text-white" />
+                        {/* Third Match */}
+                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                              <div className="w-14 h-14 bg-red-600 rounded-lg flex items-center justify-center">
+                                <span className="text-white font-bold text-xl">R</span>
                               </div>
                               <div>
-                                <h4 className="font-bold text-gray-900">Raytheon Technologies</h4>
-                                <p className="text-sm text-gray-600">Advanced Technology</p>
+                                <h4 className="font-bold text-gray-900 text-lg">Raytheon Technologies</h4>
+                                <p className="text-gray-600">Integrated Defense Solutions</p>
                               </div>
                             </div>
-                            <Badge variant="secondary">92% Match</Badge>
-                          </div>
-                          <div className="grid grid-cols-3 gap-4 text-sm">
-                            <div>
-                              <span className="text-gray-600">Security:</span>
-                              <span className="font-medium ml-1">Top Secret</span>
-                            </div>
-                            <div>
-                              <span className="text-gray-600">Experience:</span>
-                              <span className="font-medium ml-1">10+ years</span>
-                            </div>
-                            <div>
-                              <span className="text-gray-600">Past Performance:</span>
-                              <span className="font-medium ml-1">Good</span>
-                            </div>
+                            <div className="text-3xl font-bold text-gray-600">91%</div>
                           </div>
                         </div>
                       </div>
@@ -209,9 +148,9 @@ export function BenefitsSection() {
                   </div>
                 </div>
 
-                {/* Laptop Base */}
-                <div className="bg-gray-300 h-4 rounded-b-2xl shadow-lg"></div>
-                <div className="bg-gray-400 h-2 w-16 mx-auto rounded-b-lg"></div>
+                {/* Laptop Base with Proper Perspective */}
+                <div className="bg-gray-300 h-6 rounded-b-2xl shadow-lg border-x-8 border-b-8 border-gray-400"></div>
+                <div className="bg-gray-400 h-3 w-24 mx-auto rounded-b-lg shadow-md"></div>
               </div>
             </div>
           </div>
@@ -268,4 +207,4 @@ export function BenefitsSection() {
       </div>
     </section>
   )
-} 
+}

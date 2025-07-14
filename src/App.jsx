@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { BenefitsSection } from './BenefitsSection'
+import { LogoCarousel } from './components/LogoCarousel'
 
 function App() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
@@ -119,6 +120,9 @@ function App() {
           ))}
         </div>
       </section>
+
+      {/* Logo Carousel */}
+      <LogoCarousel />
 
       {/* Benefits Section */}
       <BenefitsSection />

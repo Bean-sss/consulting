@@ -1414,4 +1414,82 @@ body {
   .text-xl {
     font-size: 1.125rem;
   }
+}
+
+/* Logo Carousel */
+.logo-carousel-section {
+  padding: 2rem 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.02));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.carousel-label {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+}
+
+.logo-carousel {
+  overflow: hidden;
+  position: relative;
+  max-width: 100%;
+}
+
+.logo-track {
+  display: flex;
+  align-items: center;
+  animation: scroll-logos 20s linear infinite;
+  width: fit-content;
+  gap: 3rem;
+}
+
+@keyframes scroll-logos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 120px;
+  padding: 0.5rem;
+}
+
+.logo-image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  filter: opacity(0.9);
+  transition: all 0.3s ease;
+}
+
+.logo-item:hover .logo-image {
+  filter: opacity(1);
+  transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logo-carousel-section {
+    padding: 1.5rem 0;
+  }
+  
+  .logo-item {
+    height: 50px;
+    width: 100px;
+  }
+  
+  .logo-track {
+    gap: 2rem;
+  }
 } 
