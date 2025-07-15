@@ -4,32 +4,32 @@ export function LogoCarousel() {
   const logos = [
     {
       name: 'Boeing',
-      src: '/Boeing_full_logo.svg.png',
+      src: '/assets/Boeing_full_logo.svg.png',
       alt: 'Boeing Logo'
     },
     {
       name: 'Lockheed Martin',
-      src: '/Lockheed_Martin_logo.svg.png',
+      src: '/assets/Lockheed_Martin_logo.svg.png',
       alt: 'Lockheed Martin Logo'
     },
     {
       name: 'Raytheon Technologies',
-      src: '/Raytheon_Technologies_logo.svg.png',
+      src: '/assets/Raytheon_Technologies_logo.svg.png',
       alt: 'Raytheon Technologies Logo'
     },
     {
       name: 'Palantir',
-      src: '/Palantir_company_logo.png',
+      src: '/assets/Palantir_company_logo.png',
       alt: 'Palantir Logo'
     },
     {
       name: 'Canadian Forces',
-      src: '/Canadian_Forces_emblem.svg.png',
+      src: '/assets/Canadian_Forces_emblem.svg.png',
       alt: 'Canadian Forces Emblem'
     },
     {
       name: 'Government of Canada',
-      src: '/canada-wordmark-colour.png',
+      src: '/assets/canada-wordmark-colour.png',
       alt: 'Government of Canada Wordmark'
     }
   ]

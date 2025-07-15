@@ -8,10 +8,10 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false)
   
   const videos = [
-    '13668624_3840_2160_25fps.mp4',
-    '3309765-uhd_3840_2160_30fps.mp4',
-    '6201055-uhd_3840_2160_25fps.mp4',
-    '6333333-hd_1920_1080_24fps.mp4'
+    '/assets/13668624_3840_2160_25fps.mp4',
+    '/assets/3309765-uhd_3840_2160_30fps.mp4',
+    '/assets/6201055-uhd_3840_2160_25fps.mp4',
+    '/assets/6333333-hd_1920_1080_24fps.mp4'
   ]
 
   useEffect(() => {
