@@ -1,0 +1,8 @@
+pymupdf
+pdf2image
+camelot-py
+sentence-transformers
+scikit-learn
+torch
+transformers
+
