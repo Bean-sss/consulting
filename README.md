@@ -63,7 +63,7 @@ npm run build
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173(frontend) and the backend API at `http://localhost:3000
+The application will be available at http://localhost:5173 (frontend) and the backend API at http://localhost:3000
 
 ### Available Scripts
 
