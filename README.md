@@ -29,9 +29,11 @@ SUPABASE_KEY=your_supabase_anon_key_here
 OLLAMA_BASE_URL=http://localhost:11434
 ```
 
-###3. Database Setup
-1*Create a Supabase project** at [supabase.com](https://supabase.com)
+### 3. Database Setup
+1. **Create a Supabase project** at [supabase.com](https://supabase.com)
+
 2. **Enable pgvector extension** in your Supabase dashboard
+   
 3. **Run the supabase-setup.sql** in your Supabase SQL Editor:
 
 4. **Create a storage bucket**:
