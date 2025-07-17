@@ -1,9 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Badge } from './components/ui/badge'
 import { Card } from './components/ui/card'
 import { Upload, Users, BarChart3, LineChart, CheckCircle } from 'lucide-react'
+import AutoFillRfpCard from "./components/AutoFillrfpCard"
 
 export function BenefitsSection() {
+  const [extractedData, setExtractedData] = useState(null)
+  const [fieldStates, setFieldStates] = useState({
+    project_title: false,
+    budget_range: false,
+    security_clearance: false,
+    timeline: false
+  })
+  const [hasUploaded, setHasUploaded] = useState(false)
+
+  const handleDataExtracted = (data) => {
+    setExtractedData(data)
+    setHasUploaded(true)
+    // Reset checkmarks before animating
+    setFieldStates({
+      project_title: false,
+      budget_range: false,
+      security_clearance: false,
+      timeline: false
+    })
+    // Animate field checkmarks with a slower delay
+    setTimeout(() => setFieldStates(prev => ({ ...prev, project_title: true })), 400)
+    setTimeout(() => setFieldStates(prev => ({ ...prev, budget_range: true })), 800)
+    setTimeout(() => setFieldStates(prev => ({ ...prev, security_clearance: true })), 1200)
+    setTimeout(() => setFieldStates(prev => ({ ...prev, timeline: true })), 1600)
+  }
+
+  const fieldConfig = [
+    { key: 'project_title', label: 'Project Title' },
+    { key: 'budget_range', label: 'Budget Range' },
+    { key: 'security_clearance', label: 'Security Clearance' },
+    { key: 'timeline', label: 'Timeline' }
+  ]
+
   return (
     <section className="py-20 px-6 bg-gradient-to-b from-background to-muted/30">
       <div className="max-w-7xl mx-auto">
@@ -25,24 +59,19 @@ export function BenefitsSection() {
               <div className="relative max-w-md mx-auto">
                 <Card className="p-6 shadow-2xl bg-white">
                   <div className="space-y-4">
-                    <div className="text-center">
-                      <Upload className="w-10 h-10 text-accent mx-auto mb-2" />
-                      <h4 className="font-bold text-gray-900">Auto-Filled RFP Form</h4>
-                      <p className="text-sm text-gray-600">AI populates every field</p>
-                    </div>
+                    <AutoFillRfpCard onDataExtracted={handleDataExtracted} />
+
 
                     {/* Auto-filled fields */}
                     <div className="space-y-2">
-                      {['Project Title', 'Budget Range', 'Security Clearance', 'Timeline'].map((f) => (
-                        <div key={f} className="flex justify-between items-center bg-gray-50 border rounded-lg px-3 py-2">
-                          <span className="text-sm text-gray-700">{f}</span>
-                          <CheckCircle className="w-4 h-4 text-green-500" />
+                      {fieldConfig.map((field) => (
+                        <div key={field.key} className="flex justify-between items-center bg-gray-50 border rounded-lg px-3 py-2">
+                          <span className="text-sm text-gray-700">{field.label}</span>
+                          {fieldStates[field.key] && (
+                            <CheckCircle className="w-4 h-4 text-green-500 animate-pulse" />
+                          )}
                         </div>
                       ))}
-                    </div>
-
-                    <div className="text-center pt-2">
-                      <Badge className="bg-blue-100 text-blue-700 border-blue-200">0 fields to type</Badge>
                     </div>
                   </div>
                 </Card>

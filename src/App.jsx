@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BenefitsSection } from './BenefitsSection'
 import { LogoCarousel } from './components/LogoCarousel'
 
+
 function App() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
