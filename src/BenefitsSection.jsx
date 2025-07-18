@@ -100,86 +100,100 @@ export function BenefitsSection() {
             </div>
 
             <div>
-              {/* Mockup: Computer Screen with Defense Contractor Matching */}
+              {/* Mockup: Modern Monitor with Defense Contractor Matching */}
               <div className="relative max-w-4xl mx-auto">
-                {/* Computer Screen with Proper Bezels */}
-                <div className="bg-gray-900 rounded-t-2xl p-8 shadow-2xl border-8 border-gray-800">
-                  {/* Browser Top Bar */}
-                  <div className="flex items-center mb-6">
-                    <div className="flex gap-2 mr-4">
-                      <div className="w-4 h-4 rounded-full bg-red-500"></div>
-                      <div className="w-4 h-4 rounded-full bg-yellow-500"></div>
-                      <div className="w-4 h-4 rounded-full bg-green-500"></div>
-                    </div>
-                    <div className="flex-1 bg-gray-700 rounded-lg px-4 py-2 border border-gray-600">
-                      <span className="text-gray-300 text-sm">bid.com/vendors</span>
+                {/* Monitor Container */}
+                <div className="relative">
+                  {/* Monitor Bezel - Like Apple Studio Display */}
+                  <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-2xl p-6 shadow-2xl" style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.3)' }}>
+                    {/* Inner Screen Frame */}
+                    <div className="bg-gray-700 rounded-xl p-4 relative overflow-hidden">
+                      {/* Browser Chrome */}
+                      <div className="flex items-center mb-3">
+                        <div className="flex gap-2 mr-4">
+                          <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors cursor-pointer shadow-sm"></div>
+                          <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer shadow-sm"></div>
+                          <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer shadow-sm"></div>
+                        </div>
+                        <div className="flex-1 bg-gray-100 rounded-md px-4 py-1.5 border border-gray-200 shadow-inner">
+                          <span className="text-gray-700 text-sm">🔒 bid.com/vendors</span>
+                        </div>
+                      </div>
+
+                      {/* Screen Content */}
+                      <div className="bg-white rounded-md overflow-hidden shadow-lg" style={{ aspectRatio: '16/9' }}>
+                        {/* App Interface */}
+                        <div className="p-8 h-full">
+                          <div className="mb-8">
+                            <h3 className="text-3xl font-bold text-gray-900 mb-2">Vendor Matches</h3>
+                            <div className="text-base text-gray-600">Showing 3 of 47 qualified vendors</div>
+                          </div>
+
+                          <div className="space-y-6">
+                            {/* Top Match */}
+                            <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-200 hover:border-blue-300">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                  <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-md">
+                                    <span className="text-white font-bold text-xl">P</span>
+                                  </div>
+                                  <div>
+                                    <h4 className="font-bold text-gray-900 text-lg">Palantir Technologies</h4>
+                                    <p className="text-gray-600">Data Analytics & AI Platform</p>
+                                  </div>
+                                </div>
+                                <div className="text-3xl font-bold text-blue-600">97%</div>
+                              </div>
+                            </div>
+
+                            {/* Second Match */}
+                            <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-200 hover:border-gray-400">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                  <div className="w-14 h-14 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center shadow-md">
+                                    <span className="text-white font-bold text-xl">L</span>
+                                  </div>
+                                  <div>
+                                    <h4 className="font-bold text-gray-900 text-lg">Lockheed Martin</h4>
+                                    <p className="text-gray-600">Aerospace & Defense Systems</p>
+                                  </div>
+                                </div>
+                                <div className="text-3xl font-bold text-gray-600">94%</div>
+                              </div>
+                            </div>
+
+                            {/* Third Match */}
+                            <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-200 hover:border-red-300">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                  <div className="w-14 h-14 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-md">
+                                    <span className="text-white font-bold text-xl">R</span>
+                                  </div>
+                                  <div>
+                                    <h4 className="font-bold text-gray-900 text-lg">Raytheon Technologies</h4>
+                                    <p className="text-gray-600">Integrated Defense Solutions</p>
+                                  </div>
+                                </div>
+                                <div className="text-3xl font-bold text-gray-600">91%</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-lg overflow-hidden aspect-video">
-                    {/* Vendor Grid */}
-                    <div className="p-8 h-full">
-                      <div className="mb-8">
-                        <h3 className="text-3xl font-bold text-gray-900 mb-2">Vendor Matches</h3>
-                        <div className="text-base text-gray-600">Showing 3 of 47 qualified vendors</div>
-                      </div>
-
-                      <div className="space-y-6">
-                        {/* Top Match */}
-                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                              <div className="w-14 h-14 bg-blue-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">P</span>
-                              </div>
-                              <div>
-                                <h4 className="font-bold text-gray-900 text-lg">Palantir Technologies</h4>
-                                <p className="text-gray-600">Data Analytics & AI Platform</p>
-                              </div>
-                            </div>
-                            <div className="text-3xl font-bold text-blue-600">97%</div>
-                          </div>
-                        </div>
-
-                        {/* Second Match */}
-                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                              <div className="w-14 h-14 bg-gray-800 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">L</span>
-                              </div>
-                              <div>
-                                <h4 className="font-bold text-gray-900 text-lg">Lockheed Martin</h4>
-                                <p className="text-gray-600">Aerospace & Defense Systems</p>
-                              </div>
-                            </div>
-                            <div className="text-3xl font-bold text-gray-600">94%</div>
-                          </div>
-                        </div>
-
-                        {/* Third Match */}
-                        <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                              <div className="w-14 h-14 bg-red-600 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-xl">R</span>
-                              </div>
-                              <div>
-                                <h4 className="font-bold text-gray-900 text-lg">Raytheon Technologies</h4>
-                                <p className="text-gray-600">Integrated Defense Solutions</p>
-                              </div>
-                            </div>
-                            <div className="text-3xl font-bold text-gray-600">91%</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  {/* Monitor Base */}
+                  <div className="relative mt-4">
+                    {/* Slim Monitor Stand */}
+                    <div className="w-24 h-6 bg-gradient-to-b from-gray-300 to-gray-400 rounded-lg mx-auto shadow-md"></div>
+                    {/* Monitor Base */}
+                    <div className="w-32 h-3 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mx-auto mt-1 shadow-sm"></div>
                   </div>
+
+                  {/* Subtle Screen Glow */}
+                  <div className="absolute inset-6 bg-gradient-to-t from-blue-500/3 to-transparent rounded-xl pointer-events-none"></div>
                 </div>
-
-                {/* Laptop Base with Proper Perspective */}
-                <div className="bg-gray-300 h-6 rounded-b-2xl shadow-lg border-x-8 border-b-8 border-gray-400"></div>
-                <div className="bg-gray-400 h-3 w-24 mx-auto rounded-b-lg shadow-md"></div>
               </div>
             </div>
           </div>
