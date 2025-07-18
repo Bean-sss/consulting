@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Badge } from './components/ui/badge'
-import { Card } from './components/ui/card'
-import { Upload, Users, BarChart3, LineChart, CheckCircle } from 'lucide-react'
+import { Upload, Users, BarChart3 } from 'lucide-react'
 import AutoFillRfpCard from "./components/AutoFillrfpCard"
 
 export function BenefitsSection() {
@@ -55,27 +54,170 @@ export function BenefitsSection() {
           {/* Benefit 1: Upload & AI Analysis */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="order-2 lg:order-1">
-              {/* Mockup: RFP Upload Interface */}
-              <div className="relative max-w-md mx-auto">
-                <Card className="p-6 shadow-2xl bg-white">
-                  <div className="space-y-4">
-                    <AutoFillRfpCard onDataExtracted={handleDataExtracted} />
-
-
-                    {/* Auto-filled fields */}
-                    <div className="space-y-2">
-                      {fieldConfig.map((field) => (
-                        <div key={field.key} className="flex justify-between items-center bg-gray-50 border rounded-lg px-3 py-2">
-                          <span className="text-sm text-gray-700">{field.label}</span>
-                          {fieldStates[field.key] && (
-                            <CheckCircle className="w-4 h-4 text-green-500 animate-pulse" />
-                          )}
+              {/* RFP Upload Interface - Dark Theme */}
+              <div className="rfp-mockup-container">
+                <div className="rfp-mockup-screen">
+                  <div className="rfp-screen-header">
+                    <div className="rfp-screen-controls">
+                      <div className="rfp-control"></div>
+                      <div className="rfp-control"></div>
+                      <div className="rfp-control"></div>
+                    </div>
+                    <div className="rfp-screen-title">RFP Auto-Fill</div>
+                  </div>
+                  <div className="rfp-screen-content">
+                    <div className="rfp-upload-area">
+                      <div className="rfp-upload-icon">📄</div>
+                      <div className="rfp-upload-text">Drop RFP here or click to upload</div>
+                      <div className="rfp-upload-formats">PDF, DOCX, TXT</div>
+                    </div>
+                    
+                    <div className="rfp-fields">
+                      {fieldConfig.map((field, index) => (
+                        <div key={field.key} className={`rfp-field ${fieldStates[field.key] ? 'filled' : ''}`}>
+                          <div className="rfp-field-label">{field.label}</div>
+                          <div className="rfp-field-status">
+                            {fieldStates[field.key] ? '✓' : '...'}
+                          </div>
                         </div>
                       ))}
                     </div>
                   </div>
-                </Card>
+                </div>
               </div>
+
+              <style jsx>{`
+                .rfp-mockup-container {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  position: relative;
+                  max-width: 400px;
+                  margin: 0 auto;
+                }
+
+                .rfp-mockup-screen {
+                  background: #1e293b;
+                  border-radius: 12px;
+                  padding: 16px;
+                  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                  width: 100%;
+                  max-width: 400px;
+                }
+
+                .rfp-screen-header {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-bottom: 16px;
+                  padding-bottom: 12px;
+                  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .rfp-screen-controls {
+                  display: flex;
+                  gap: 8px;
+                }
+
+                .rfp-control {
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: rgba(255, 255, 255, 0.3);
+                }
+
+                .rfp-control:first-child {
+                  background: #ef4444;
+                }
+
+                .rfp-control:nth-child(2) {
+                  background: #f59e0b;
+                }
+
+                .rfp-control:nth-child(3) {
+                  background: #10b981;
+                }
+
+                .rfp-screen-title {
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 14px;
+                  font-weight: 600;
+                }
+
+                .rfp-screen-content {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 16px;
+                }
+
+                .rfp-upload-area {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  padding: 24px;
+                  background: rgba(255, 255, 255, 0.05);
+                  border-radius: 8px;
+                  border: 2px dashed rgba(255, 255, 255, 0.2);
+                  text-align: center;
+                }
+
+                .rfp-upload-icon {
+                  font-size: 32px;
+                  margin-bottom: 8px;
+                }
+
+                .rfp-upload-text {
+                  color: white;
+                  font-size: 14px;
+                  font-weight: 500;
+                  margin-bottom: 4px;
+                }
+
+                .rfp-upload-formats {
+                  color: rgba(255, 255, 255, 0.6);
+                  font-size: 12px;
+                }
+
+                .rfp-fields {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 8px;
+                }
+
+                .rfp-field {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 12px;
+                  background: rgba(255, 255, 255, 0.05);
+                  border-radius: 8px;
+                  border-left: 4px solid rgba(255, 255, 255, 0.2);
+                  transition: all 0.3s ease;
+                }
+
+                .rfp-field.filled {
+                  border-left-color: #10b981;
+                  background: rgba(16, 185, 129, 0.1);
+                }
+
+                .rfp-field-label {
+                  color: white;
+                  font-size: 14px;
+                  font-weight: 500;
+                }
+
+                .rfp-field-status {
+                  color: #10b981;
+                  font-size: 14px;
+                  font-weight: 600;
+                  min-width: 20px;
+                  text-align: center;
+                }
+
+                .rfp-field:not(.filled) .rfp-field-status {
+                  color: rgba(255, 255, 255, 0.4);
+                }
+              `}</style>
             </div>
 
             <div className="order-1 lg:order-2 space-y-6">
@@ -100,141 +242,343 @@ export function BenefitsSection() {
             </div>
 
             <div>
-              {/* Mockup: Modern Monitor with Defense Contractor Matching */}
-              <div className="relative max-w-4xl mx-auto">
-                {/* Monitor Container */}
-                <div className="relative">
-                  {/* Monitor Bezel - Like Apple Studio Display */}
-                  <div className="bg-gradient-to-b from-gray-200 to-gray-300 rounded-2xl p-6 shadow-2xl" style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.3)' }}>
-                    {/* Inner Screen Frame */}
-                    <div className="bg-gray-700 rounded-xl p-4 relative overflow-hidden">
-                      {/* Browser Chrome */}
-                      <div className="flex items-center mb-3">
-                        <div className="flex gap-2 mr-4">
-                          <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors cursor-pointer shadow-sm"></div>
-                          <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer shadow-sm"></div>
-                          <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer shadow-sm"></div>
-                        </div>
-                        <div className="flex-1 bg-gray-100 rounded-md px-4 py-1.5 border border-gray-200 shadow-inner">
-                          <span className="text-gray-700 text-sm">🔒 bid.com/vendors</span>
-                        </div>
+              {/* Vendor Matching Mockup - Same as CTA */}
+              <div className="mockup-container">
+                <div className="mockup-screen">
+                  <div className="screen-header">
+                    <div className="screen-controls">
+                      <div className="control"></div>
+                      <div className="control"></div>
+                      <div className="control"></div>
+                    </div>
+                    <div className="screen-title">Vendor Opportunities</div>
+                  </div>
+                  <div className="screen-content">
+                    <div className="opportunity-item match">
+                      <div className="opportunity-info">
+                        <div className="opportunity-title">AI Defense Systems</div>
+                        <div className="opportunity-match">96% Match</div>
                       </div>
-
-                      {/* Screen Content */}
-                      <div className="bg-white rounded-md overflow-hidden shadow-lg" style={{ aspectRatio: '16/9' }}>
-                        {/* App Interface */}
-                        <div className="p-8 h-full">
-                          <div className="mb-8">
-                            <h3 className="text-3xl font-bold text-gray-900 mb-2">Vendor Matches</h3>
-                            <div className="text-base text-gray-600">Showing 3 of 47 qualified vendors</div>
-                          </div>
-
-                          <div className="space-y-6">
-                            {/* Top Match */}
-                            <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-200 hover:border-blue-300">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                  <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-md">
-                                    <span className="text-white font-bold text-xl">P</span>
-                                  </div>
-                                  <div>
-                                    <h4 className="font-bold text-gray-900 text-lg">Palantir Technologies</h4>
-                                    <p className="text-gray-600">Data Analytics & AI Platform</p>
-                                  </div>
-                                </div>
-                                <div className="text-3xl font-bold text-blue-600">97%</div>
-                              </div>
-                            </div>
-
-                            {/* Second Match */}
-                            <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-200 hover:border-gray-400">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                  <div className="w-14 h-14 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center shadow-md">
-                                    <span className="text-white font-bold text-xl">L</span>
-                                  </div>
-                                  <div>
-                                    <h4 className="font-bold text-gray-900 text-lg">Lockheed Martin</h4>
-                                    <p className="text-gray-600">Aerospace & Defense Systems</p>
-                                  </div>
-                                </div>
-                                <div className="text-3xl font-bold text-gray-600">94%</div>
-                              </div>
-                            </div>
-
-                            {/* Third Match */}
-                            <div className="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all duration-200 hover:border-red-300">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-4">
-                                  <div className="w-14 h-14 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-md">
-                                    <span className="text-white font-bold text-xl">R</span>
-                                  </div>
-                                  <div>
-                                    <h4 className="font-bold text-gray-900 text-lg">Raytheon Technologies</h4>
-                                    <p className="text-gray-600">Integrated Defense Solutions</p>
-                                  </div>
-                                </div>
-                                <div className="text-3xl font-bold text-gray-600">91%</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="opportunity-value">$9.2M</div>
+                    </div>
+                    <div className="opportunity-item match">
+                      <div className="opportunity-info">
+                        <div className="opportunity-title">Drone Technology</div>
+                        <div className="opportunity-match">94% Match</div>
                       </div>
+                      <div className="opportunity-value">$6.8M</div>
+                    </div>
+                    <div className="opportunity-item match">
+                      <div className="opportunity-info">
+                        <div className="opportunity-title">Secure Communications</div>
+                        <div className="opportunity-match">91% Match</div>
+                      </div>
+                      <div className="opportunity-value">$4.5M</div>
+                    </div>
+                    <div className="opportunity-item potential">
+                      <div className="opportunity-info">
+                        <div className="opportunity-title">Naval Equipment</div>
+                        <div className="opportunity-match">87% Match</div>
+                      </div>
+                      <div className="opportunity-value">$11.3M</div>
                     </div>
                   </div>
-
-                  {/* Monitor Base */}
-                  <div className="relative mt-4">
-                    {/* Slim Monitor Stand */}
-                    <div className="w-24 h-6 bg-gradient-to-b from-gray-300 to-gray-400 rounded-lg mx-auto shadow-md"></div>
-                    {/* Monitor Base */}
-                    <div className="w-32 h-3 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mx-auto mt-1 shadow-sm"></div>
-                  </div>
-
-                  {/* Subtle Screen Glow */}
-                  <div className="absolute inset-6 bg-gradient-to-t from-blue-500/3 to-transparent rounded-xl pointer-events-none"></div>
                 </div>
               </div>
+
+              <style jsx>{`
+                .mockup-container {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  position: relative;
+                  max-width: 400px;
+                  margin: 0 auto;
+                }
+
+                .mockup-screen {
+                  background: #1e293b;
+                  border-radius: 12px;
+                  padding: 16px;
+                  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                  width: 100%;
+                  max-width: 400px;
+                }
+
+                .screen-header {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-bottom: 16px;
+                  padding-bottom: 12px;
+                  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .screen-controls {
+                  display: flex;
+                  gap: 8px;
+                }
+
+                .control {
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: rgba(255, 255, 255, 0.3);
+                }
+
+                .control:first-child {
+                  background: #ef4444;
+                }
+
+                .control:nth-child(2) {
+                  background: #f59e0b;
+                }
+
+                .control:nth-child(3) {
+                  background: #10b981;
+                }
+
+                .screen-title {
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 14px;
+                  font-weight: 600;
+                }
+
+                .screen-content {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 12px;
+                }
+
+                .opportunity-item {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 12px;
+                  background: rgba(255, 255, 255, 0.05);
+                  border-radius: 8px;
+                  border-left: 4px solid;
+                }
+
+                .opportunity-item.match {
+                  border-left-color: #10b981;
+                }
+
+                .opportunity-item.potential {
+                  border-left-color: #f59e0b;
+                }
+
+                .opportunity-info {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 4px;
+                }
+
+                .opportunity-title {
+                  color: white;
+                  font-size: 14px;
+                  font-weight: 600;
+                }
+
+                .opportunity-value {
+                  color: #10b981;
+                  font-size: 16px;
+                  font-weight: 700;
+                }
+
+                .opportunity-match {
+                  color: #10b981;
+                  font-size: 12px;
+                  font-weight: 600;
+                }
+
+                .opportunity-item.potential .opportunity-value {
+                  color: #f59e0b;
+                }
+
+                .opportunity-item.potential .opportunity-match {
+                  color: #f59e0b;
+                }
+              `}</style>
             </div>
           </div>
 
           {/* Benefit 3: Faster Project Completion */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="order-2 lg:order-1">
-              {/* Mockup: Pipeline Velocity Dashboard */}
-              <div className="relative max-w-xl mx-auto">
-                <Card className="p-6 shadow-2xl bg-white">
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="font-bold text-gray-900">Pipeline Velocity</div>
-                    <LineChart className="w-5 h-5 text-accent" />
-                  </div>
-
-                  {/* Line Graph */}
-                  <svg viewBox="0 0 160 60" className="w-full h-24 text-accent mb-6">
-                    <polyline
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      points="0,55 20,45 40,35 60,25 80,28 100,18 120,12 140,8 160,5"
-                    />
-                  </svg>
-
-                  {/* Metrics */}
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center">
-                      <p className="text-xs text-gray-600">Traditional</p>
-                      <p className="text-2xl font-bold text-red-600">6-8 wks</p>
+              {/* Pipeline Velocity Dashboard - Dark Theme */}
+              <div className="velocity-mockup-container">
+                <div className="velocity-mockup-screen">
+                  <div className="velocity-screen-header">
+                    <div className="velocity-screen-controls">
+                      <div className="velocity-control"></div>
+                      <div className="velocity-control"></div>
+                      <div className="velocity-control"></div>
                     </div>
-                    <div className="text-center">
-                      <p className="text-xs text-gray-600">With AI</p>
-                      <p className="text-2xl font-bold text-green-600">3 days</p>
+                    <div className="velocity-screen-title">Pipeline Velocity</div>
+                  </div>
+                  <div className="velocity-screen-content">
+                    <div className="velocity-chart">
+                      <svg viewBox="0 0 160 60" className="velocity-svg">
+                        <polyline
+                          fill="none"
+                          stroke="#10b981"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          points="0,55 20,45 40,35 60,25 80,28 100,18 120,12 140,8 160,5"
+                        />
+                        <circle cx="160" cy="5" r="4" fill="#10b981" />
+                      </svg>
+                    </div>
+                    
+                    <div className="velocity-metrics">
+                      <div className="velocity-metric">
+                        <div className="velocity-metric-label">Traditional</div>
+                        <div className="velocity-metric-value traditional">6-8 wks</div>
+                      </div>
+                      <div className="velocity-metric">
+                        <div className="velocity-metric-label">With AI</div>
+                        <div className="velocity-metric-value improved">3 days</div>
+                      </div>
+                    </div>
+                    
+                    <div className="velocity-improvement">
+                      <div className="velocity-improvement-text">5× faster turnaround</div>
                     </div>
                   </div>
-                </Card>
+                </div>
               </div>
+
+              <style jsx>{`
+                .velocity-mockup-container {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  position: relative;
+                  max-width: 400px;
+                  margin: 0 auto;
+                }
+
+                .velocity-mockup-screen {
+                  background: #1e293b;
+                  border-radius: 12px;
+                  padding: 16px;
+                  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                  width: 100%;
+                  max-width: 400px;
+                }
+
+                .velocity-screen-header {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-bottom: 16px;
+                  padding-bottom: 12px;
+                  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .velocity-screen-controls {
+                  display: flex;
+                  gap: 8px;
+                }
+
+                .velocity-control {
+                  width: 12px;
+                  height: 12px;
+                  border-radius: 50%;
+                  background: rgba(255, 255, 255, 0.3);
+                }
+
+                .velocity-control:first-child {
+                  background: #ef4444;
+                }
+
+                .velocity-control:nth-child(2) {
+                  background: #f59e0b;
+                }
+
+                .velocity-control:nth-child(3) {
+                  background: #10b981;
+                }
+
+                .velocity-screen-title {
+                  color: rgba(255, 255, 255, 0.9);
+                  font-size: 14px;
+                  font-weight: 600;
+                }
+
+                .velocity-screen-content {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 16px;
+                }
+
+                .velocity-chart {
+                  padding: 16px;
+                  background: rgba(255, 255, 255, 0.05);
+                  border-radius: 8px;
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .velocity-svg {
+                  width: 100%;
+                  height: 60px;
+                }
+
+                .velocity-metrics {
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 16px;
+                }
+
+                .velocity-metric {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  padding: 16px;
+                  background: rgba(255, 255, 255, 0.05);
+                  border-radius: 8px;
+                  text-align: center;
+                }
+
+                .velocity-metric-label {
+                  color: rgba(255, 255, 255, 0.7);
+                  font-size: 12px;
+                  font-weight: 500;
+                  margin-bottom: 8px;
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+                }
+
+                .velocity-metric-value {
+                  font-size: 24px;
+                  font-weight: 700;
+                  line-height: 1;
+                }
+
+                .velocity-metric-value.traditional {
+                  color: #ef4444;
+                }
+
+                .velocity-metric-value.improved {
+                  color: #10b981;
+                }
+
+                .velocity-improvement {
+                  text-align: center;
+                  padding: 12px;
+                  background: rgba(16, 185, 129, 0.1);
+                  border-radius: 8px;
+                  border: 1px solid rgba(16, 185, 129, 0.2);
+                }
+
+                .velocity-improvement-text {
+                  color: #10b981;
+                  font-size: 14px;
+                  font-weight: 600;
+                }
+              `}</style>
             </div>
 
             <div className="order-1 lg:order-2 space-y-6">
