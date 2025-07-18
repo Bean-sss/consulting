@@ -138,14 +138,31 @@ const LandingPage = () => {
         <div className="hero-content">
           <div className="container">
             <div className="hero-text">
-              <h1>RFP Analysis.<br />Vendor Matching.<br />Done.</h1>
+              <div className="hero-badge">
+                <span>Trusted by 500+ defense contractors & 2,000+ vendors</span>
+              </div>
+              <h1>Defense procurement.<br />Reimagined.</h1>
               <p>
-                The platform defense contractors trust to analyze RFPs and connect with qualified vendors. 
-                Streamline procurement. Accelerate wins.
+                The AI-powered platform that connects qualified vendors with the right contracts 
+                and helps contractors find perfect matches. Stop wasting time on manual processes.
               </p>
               <div className="hero-buttons">
-                <a href="/login" className="cta-button">Start Analyzing</a>
-                <a href="#learn-more" className="secondary-button">See How It Works</a>
+                <a href="/login" className="cta-button primary">Get Started Free</a>
+                <a href="#how-it-works" className="secondary-button">See How It Works</a>
+              </div>
+              <div className="hero-stats">
+                <div className="stat">
+                  <span className="stat-number">$4.1B</span>
+                  <span className="stat-label">Contract value matched</span>
+                </div>
+                <div className="stat">
+                  <span className="stat-number">94%</span>
+                  <span className="stat-label">Match accuracy</span>
+                </div>
+                <div className="stat">
+                  <span className="stat-number">&lt; 5 min</span>
+                  <span className="stat-label">Average analysis time</span>
+                </div>
               </div>
             </div>
           </div>
@@ -695,8 +712,25 @@ const LandingPage = () => {
         .hero-content {
           position: relative;
           z-index: 3;
-          text-align: center;
+          text-align: left;
           color: white;
+        }
+
+        .hero-badge {
+          display: inline-block;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 50px;
+          padding: 8px 16px;
+          font-size: 14px;
+          font-weight: 500;
+          margin-bottom: 24px;
+          backdrop-filter: blur(10px);
+        }
+
+        .hero-badge span {
+          color: white;
+          opacity: 0.9;
         }
 
         .hero-text h1 {
@@ -713,16 +747,40 @@ const LandingPage = () => {
           margin: 0 0 40px 0;
           opacity: 0.9;
           max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .hero-buttons {
           display: flex;
           gap: 16px;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
+          margin-bottom: 48px;
+        }
+
+        .hero-stats {
+          display: flex;
+          gap: 40px;
+          align-items: center;
+        }
+
+        .hero-stats .stat {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .hero-stats .stat-number {
+          font-size: 24px;
+          font-weight: 700;
+          color: white;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-stats .stat-label {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.8);
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .secondary-button {
@@ -1525,7 +1583,20 @@ const LandingPage = () => {
 
           .hero-buttons {
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
+          }
+
+          .hero-stats {
+            gap: 24px;
+            flex-wrap: wrap;
+          }
+
+          .hero-stats .stat-number {
+            font-size: 20px;
+          }
+
+          .hero-stats .stat-label {
+            font-size: 13px;
           }
 
           .features-header h2 {
