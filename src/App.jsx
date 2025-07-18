@@ -400,10 +400,21 @@ const LandingPage = () => {
                     </div>
                     <div className="mockup-content">
                       <div className="upload-zone">
-                        <div className="upload-icon">📄</div>
-                        <div className="upload-text">RFP_Defense_Contract_2024.pdf</div>
-                        <div className="upload-progress">
-                          <div className="progress-bar"></div>
+                        <div className="upload-dropzone">
+                          <div className="upload-icon">📄</div>
+                          <div className="upload-main-text">Drag & drop your RFP document</div>
+                          <div className="upload-sub-text">or click to browse files</div>
+                          <div className="upload-button">Browse Files</div>
+                        </div>
+                        <div className="upload-file-info">
+                          <div className="file-details">
+                            <div className="file-name">RFP_Defense_Contract_2024.pdf</div>
+                            <div className="file-size">2.4 MB • Uploading...</div>
+                          </div>
+                          <div className="upload-progress">
+                            <div className="progress-bar"></div>
+                            <div className="progress-text">75% • 3s remaining</div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -435,18 +446,33 @@ const LandingPage = () => {
                       <span className="mockup-title">AI Analysis Engine</span>
                     </div>
                     <div className="mockup-content">
-                      <div className="analysis-grid">
-                        <div className="analysis-item">
-                          <div className="analysis-icon">AI</div>
-                          <div className="analysis-text">Requirements extracted</div>
+                      <div className="analysis-results">
+                        <div className="analysis-header">
+                          <div className="analysis-status">Analyzing 247 vendors...</div>
+                          <div className="analysis-progress">87%</div>
                         </div>
-                        <div className="analysis-item">
-                          <div className="analysis-icon">ML</div>
-                          <div className="analysis-text">Vendors matched</div>
-                        </div>
-                        <div className="analysis-item">
-                          <div className="analysis-icon">OK</div>
-                          <div className="analysis-text">Clearances verified</div>
+                        <div className="match-results">
+                          <div className="match-item high-match">
+                            <div className="match-info">
+                              <div className="vendor-name">Lockheed Martin</div>
+                              <div className="capabilities">Defense Systems, Security Clearance</div>
+                            </div>
+                            <div className="match-score">96%</div>
+                          </div>
+                          <div className="match-item medium-match">
+                            <div className="match-info">
+                              <div className="vendor-name">Raytheon Technologies</div>
+                              <div className="capabilities">Aerospace, Cybersecurity</div>
+                            </div>
+                            <div className="match-score">91%</div>
+                          </div>
+                          <div className="match-item low-match">
+                            <div className="match-info">
+                              <div className="vendor-name">BAE Systems</div>
+                              <div className="capabilities">Naval Systems, Electronics</div>
+                            </div>
+                            <div className="match-score">73%</div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -478,21 +504,33 @@ const LandingPage = () => {
                       <span className="mockup-title">Award Dashboard</span>
                     </div>
                     <div className="mockup-content">
-                      <div className="award-list">
-                        <div className="award-item">
-                          <div className="award-rank">#1</div>
-                          <div className="award-vendor">TechCorp Solutions</div>
-                          <div className="award-score">96%</div>
+                      <div className="award-interface">
+                        <div className="award-header">
+                          <div className="award-title">F-35 Avionics Integration</div>
+                          <div className="award-value">$12.5M</div>
                         </div>
-                        <div className="award-item">
-                          <div className="award-rank">#2</div>
-                          <div className="award-vendor">Defense Systems Inc</div>
-                          <div className="award-score">92%</div>
+                        <div className="selected-vendor">
+                          <div className="vendor-card">
+                            <div className="vendor-info">
+                              <div className="vendor-name">Lockheed Martin</div>
+                              <div className="vendor-details">Prime Contractor • Security Clearance: Secret</div>
+                            </div>
+                            <div className="award-badge">SELECTED</div>
+                          </div>
                         </div>
-                        <div className="award-item">
-                          <div className="award-rank">#3</div>
-                          <div className="award-vendor">Secure Tech Ltd</div>
-                          <div className="award-score">88%</div>
+                        <div className="award-actions">
+                          <div className="action-item">
+                            <div className="action-text">Contract generated</div>
+                            <div className="action-status completed">✓</div>
+                          </div>
+                          <div className="action-item">
+                            <div className="action-text">Vendor notification sent</div>
+                            <div className="action-status completed">✓</div>
+                          </div>
+                          <div className="action-item">
+                            <div className="action-text">Legal review pending</div>
+                            <div className="action-status pending">⏳</div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -516,55 +554,95 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="features" id="features">
+      {/* Results Section */}
+      <section className="results" id="features">
         <div className="container">
-          <div className="features-header">
-            <h2>Why Choose BID?</h2>
-            <p>Everything you need to streamline defense procurement</p>
+          <div className="results-header">
+            <h2>Real Results From Real Customers</h2>
+            <p>See how defense contractors and vendors are transforming their procurement</p>
           </div>
-          <div className="features-grid">
-            <div className="feature-card">
-              <h3>Smart RFP Matching</h3>
-              <p>
-                AI-powered system matches RFPs with qualified vendors based on capabilities, 
-                clearance levels, and past performance.
-              </p>
+          <div className="results-dashboard">
+            <div className="results-row">
+              <div className="result-card large">
+                <div className="result-header">
+                  <h3>Total Customer Savings</h3>
+                  <span className="result-period">Last 12 months</span>
+                </div>
+                <div className="result-value">$2.3M</div>
+                <div className="result-metric">
+                  <div className="metric-bar">
+                    <div className="metric-progress" style={{ width: '87%' }}></div>
+                  </div>
+                  <span className="metric-label">87% above industry average</span>
+                </div>
+              </div>
+              <div className="result-card">
+                <div className="result-header">
+                  <h3>Time Reduction</h3>
+                  <span className="result-period">Avg per RFP</span>
+                </div>
+                <div className="result-value">67%</div>
+                <div className="result-comparison">
+                  <div className="comparison-item">
+                    <span className="comparison-label">Before</span>
+                    <span className="comparison-value">6 weeks</span>
+                  </div>
+                  <div className="comparison-arrow">→</div>
+                  <div className="comparison-item">
+                    <span className="comparison-label">After</span>
+                    <span className="comparison-value">2 weeks</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="feature-card">
-              <h3>Security Compliance</h3>
-              <p>
-                Pre-screened vendors with security clearances and compliance with defense industry 
-                standards including DFARS and ITAR.
-              </p>
-            </div>
-            <div className="feature-card">
-              <h3>Trusted Network</h3>
-              <p>
-                Access to verified defense contractors and suppliers with proven track records 
-                in government contracting.
-              </p>
-            </div>
-            <div className="feature-card">
-              <h3>Fast Processing</h3>
-              <p>
-                Reduce procurement timelines with automated matching, digital documentation, 
-                and streamlined approval workflows.
-              </p>
-            </div>
-            <div className="feature-card">
-              <h3>Analytics & Insights</h3>
-              <p>
-                Real-time dashboards and comprehensive reporting to track RFP performance and 
-                procurement efficiency.
-              </p>
-            </div>
-            <div className="feature-card">
-              <h3>Secure Platform</h3>
-              <p>
-                Enterprise-grade security with encryption, audit trails, and compliance with federal 
-                cybersecurity requirements.
-              </p>
+            <div className="results-row">
+              <div className="result-card">
+                <div className="result-header">
+                  <h3>Win Rate Improvement</h3>
+                  <span className="result-period">For contractors</span>
+                </div>
+                <div className="result-value">+34%</div>
+                <div className="result-chart">
+                  <div className="chart-bars">
+                    <div className="chart-bar before">
+                      <div className="bar-fill" style={{ height: '42%' }}></div>
+                      <span className="bar-label">Before</span>
+                    </div>
+                    <div className="chart-bar after">
+                      <div className="bar-fill" style={{ height: '76%' }}></div>
+                      <span className="bar-label">After</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="result-card">
+                <div className="result-header">
+                  <h3>Vendor Qualification</h3>
+                  <span className="result-period">Speed increase</span>
+                </div>
+                <div className="result-value">12×</div>
+                <div className="result-detail">
+                  <div className="detail-item">
+                    <span className="detail-label">Traditional</span>
+                    <span className="detail-value">2-3 days</span>
+                  </div>
+                  <div className="detail-item">
+                    <span className="detail-label">With BID</span>
+                    <span className="detail-value">4 hours</span>
+                  </div>
+                </div>
+              </div>
+              <div className="result-card testimonial">
+                <div className="testimonial-content">
+                  <p>"BID reduced our procurement cycle from 8 weeks to 2 weeks. The ROI was immediate."</p>
+                  <div className="testimonial-author">
+                    <div className="author-info">
+                      <span className="author-name">Sarah Chen</span>
+                      <span className="author-title">Procurement Director, Lockheed Martin</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -846,8 +924,8 @@ const LandingPage = () => {
 
         .hero-badge {
           display: inline-block;
-          background: rgba(255, 255, 255, 0.1);
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(220, 38, 38, 0.1);
+          border: 1px solid rgba(220, 38, 38, 0.3);
           border-radius: 50px;
           padding: 8px 16px;
           font-size: 14px;
@@ -857,7 +935,7 @@ const LandingPage = () => {
         }
 
         .hero-badge span {
-          color: white;
+          color: #dc2626;
           opacity: 0.9;
         }
 
@@ -901,7 +979,7 @@ const LandingPage = () => {
         .hero-stats .stat-number {
           font-size: 24px;
           font-weight: 700;
-          color: white;
+          color: #dc2626;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
@@ -956,17 +1034,17 @@ const LandingPage = () => {
           box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
         }
 
-        .features {
+        .results {
           padding: 120px 0;
           background: #fafafa;
         }
 
-        .features-header {
+        .results-header {
           text-align: center;
           margin-bottom: 80px;
         }
 
-        .features-header h2 {
+        .results-header h2 {
           font-size: 48px;
           font-weight: 600;
           color: #000;
@@ -974,45 +1052,229 @@ const LandingPage = () => {
           letter-spacing: -1px;
         }
 
-        .features-header p {
+        .results-header p {
           font-size: 20px;
           color: #666;
           margin: 0;
         }
 
-        .features-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        .results-dashboard {
+          display: flex;
+          flex-direction: column;
           gap: 40px;
+          max-width: 1200px;
+          margin: 0 auto;
         }
 
-        .feature-card {
+        .results-row {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 30px;
+        }
+
+        .result-card {
           background: white;
-          padding: 40px;
-          border-radius: 12px;
+          padding: 32px;
+          border-radius: 16px;
           border: 1px solid #e6e6e6;
-          transition: all 0.2s ease;
+          transition: all 0.3s ease;
+          position: relative;
         }
 
-        .feature-card:hover {
+        .result-card:hover {
           border-color: #dc2626;
-          box-shadow: 0 4px 12px rgba(220, 38, 38, 0.1);
-          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(220, 38, 38, 0.1);
+          transform: translateY(-4px);
         }
 
-        .feature-card h3 {
-          font-size: 24px;
+        .result-card.large {
+          grid-column: span 2;
+        }
+
+        .result-card.testimonial {
+          background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+          color: white;
+        }
+
+        .result-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 24px;
+        }
+
+        .result-header h3 {
+          font-size: 18px;
           font-weight: 600;
           color: #000;
-          margin: 0 0 16px 0;
-          letter-spacing: -0.5px;
+          margin: 0;
+          letter-spacing: -0.3px;
         }
 
-        .feature-card p {
-          font-size: 16px;
+        .result-period {
+          font-size: 12px;
           color: #666;
-          margin: 0;
-          line-height: 1.6;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .result-value {
+          font-size: 48px;
+          font-weight: 700;
+          color: #dc2626;
+          margin-bottom: 20px;
+          letter-spacing: -2px;
+        }
+
+        .result-metric {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .metric-bar {
+          width: 100%;
+          height: 8px;
+          background: #f0f0f0;
+          border-radius: 4px;
+          overflow: hidden;
+        }
+
+        .metric-progress {
+          height: 100%;
+          background: linear-gradient(90deg, #dc2626, #b91c1c);
+          border-radius: 4px;
+          transition: width 2s ease;
+        }
+
+        .metric-label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        .result-comparison {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .comparison-item {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .comparison-label {
+          font-size: 12px;
+          color: #666;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+
+        .comparison-value {
+          font-size: 16px;
+          font-weight: 600;
+          color: #000;
+        }
+
+        .comparison-arrow {
+          font-size: 20px;
+          color: #dc2626;
+          font-weight: 600;
+        }
+
+        .result-chart {
+          margin-top: 8px;
+        }
+
+        .chart-bars {
+          display: flex;
+          gap: 16px;
+          align-items: flex-end;
+          height: 80px;
+        }
+
+        .chart-bar {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          flex: 1;
+        }
+
+        .bar-fill {
+          width: 100%;
+          background: linear-gradient(180deg, #dc2626, #b91c1c);
+          border-radius: 4px 4px 0 0;
+          transition: height 1.5s ease;
+        }
+
+        .bar-label {
+          font-size: 12px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        .result-detail {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .detail-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 8px 0;
+          border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-label {
+          font-size: 14px;
+          color: #666;
+          font-weight: 500;
+        }
+
+        .detail-value {
+          font-size: 14px;
+          font-weight: 600;
+          color: #000;
+        }
+
+        .testimonial-content {
+          color: white;
+        }
+
+        .testimonial-content p {
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 1.5;
+          margin: 0 0 24px 0;
+        }
+
+        .testimonial-author {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .author-info {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .author-name {
+          font-size: 16px;
+          font-weight: 600;
+          color: white;
+        }
+
+        .author-title {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.8);
         }
 
         .cta-section {
@@ -1599,40 +1861,121 @@ const LandingPage = () => {
         }
 
         .mockup-content {
-          min-height: 120px;
+          min-height: 160px;
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 12px;
         }
 
         .upload-zone {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          gap: 12px;
+          gap: 16px;
           width: 100%;
+          padding: 16px;
+        }
+
+        .upload-dropzone {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 10px;
+          padding: 24px;
+          border: 2px dashed rgba(255, 255, 255, 0.3);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.02);
+          transition: all 0.3s ease;
+        }
+
+        .upload-dropzone:hover {
+          border-color: rgba(255, 255, 255, 0.5);
+          background: rgba(255, 255, 255, 0.05);
         }
 
         .upload-icon {
-          font-size: 32px;
-          margin-bottom: 8px;
+          font-size: 36px;
+          margin-bottom: 4px;
         }
 
-        .upload-text {
-          color: rgba(255, 255, 255, 0.8);
-          font-size: 13px;
+        .upload-main-text {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 14px;
+          font-weight: 500;
           text-align: center;
         }
 
+        .upload-sub-text {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 12px;
+          text-align: center;
+        }
+
+        .upload-button {
+          background: rgba(16, 185, 129, 0.1);
+          color: #10b981;
+          border: 1px solid rgba(16, 185, 129, 0.3);
+          padding: 8px 16px;
+          border-radius: 6px;
+          font-size: 12px;
+          font-weight: 600;
+          margin-top: 4px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .upload-button:hover {
+          background: rgba(16, 185, 129, 0.2);
+          border-color: rgba(16, 185, 129, 0.5);
+        }
+
+        .upload-file-info {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          padding: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .file-details {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .file-name {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 13px;
+          font-weight: 500;
+        }
+
+        .file-size {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 11px;
+        }
+
         .upload-progress {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          width: 100%;
+        }
+
+        .progress-bar {
           width: 100%;
           height: 4px;
           background: rgba(255, 255, 255, 0.1);
           border-radius: 2px;
           overflow: hidden;
+          position: relative;
         }
 
-        .progress-bar {
+        .progress-bar::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 75%;
           height: 100%;
           background: linear-gradient(90deg, #10b981, #059669);
@@ -1640,80 +1983,213 @@ const LandingPage = () => {
           animation: pulse 2s infinite;
         }
 
+        .progress-text {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 11px;
+          text-align: center;
+          font-weight: 500;
+        }
+
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.7; }
         }
 
-        .analysis-grid {
+        .analysis-results {
           display: flex;
           flex-direction: column;
           gap: 16px;
           width: 100%;
         }
 
-        .analysis-item {
+        .analysis-header {
           display: flex;
+          justify-content: space-between;
           align-items: center;
-          gap: 12px;
+          padding: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          border-left: 3px solid #f59e0b;
+        }
+
+        .analysis-status {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 13px;
+          font-weight: 500;
+        }
+
+        .analysis-progress {
+          color: #f59e0b;
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .match-results {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .match-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          border-left: 3px solid;
+        }
+
+        .match-item.high-match {
+          border-left-color: #10b981;
+        }
+
+        .match-item.medium-match {
+          border-left-color: #f59e0b;
+        }
+
+        .match-item.low-match {
+          border-left-color: #6b7280;
+        }
+
+        .match-info {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .vendor-name {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 13px;
+          font-weight: 600;
+        }
+
+        .capabilities {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 11px;
+          font-weight: 400;
+        }
+
+        .match-score {
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .high-match .match-score {
+          color: #10b981;
+        }
+
+        .medium-match .match-score {
+          color: #f59e0b;
+        }
+
+        .low-match .match-score {
+          color: #6b7280;
+        }
+
+        .award-interface {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          width: 100%;
+        }
+
+        .award-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
           padding: 12px;
           background: rgba(255, 255, 255, 0.05);
           border-radius: 8px;
           border-left: 3px solid #10b981;
         }
 
-        .analysis-icon {
-          font-size: 12px;
-          font-weight: 700;
+        .award-title {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        .award-value {
           color: #10b981;
+          font-size: 16px;
+          font-weight: 700;
+        }
+
+        .selected-vendor {
+          width: 100%;
+        }
+
+        .vendor-card {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 12px;
           background: rgba(16, 185, 129, 0.1);
-          padding: 6px 8px;
-          border-radius: 4px;
-          min-width: 32px;
-          text-align: center;
+          border-radius: 8px;
+          border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        .analysis-text {
-          color: rgba(255, 255, 255, 0.9);
-          font-size: 13px;
-          font-weight: 500;
-        }
-
-        .award-list {
+        .vendor-info {
           display: flex;
           flex-direction: column;
-          gap: 12px;
-          width: 100%;
+          gap: 4px;
         }
 
-        .award-item {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 12px;
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 8px;
-          border-left: 3px solid #10b981;
-        }
-
-        .award-rank {
-          color: #10b981;
-          font-weight: 700;
-          font-size: 14px;
-          min-width: 24px;
-        }
-
-        .award-vendor {
+        .vendor-name {
           color: rgba(255, 255, 255, 0.9);
-          font-size: 13px;
-          font-weight: 500;
-          flex: 1;
+          font-size: 14px;
+          font-weight: 600;
         }
 
-        .award-score {
-          color: #10b981;
+        .vendor-details {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 11px;
+          font-weight: 400;
+        }
+
+        .award-badge {
+          background: #10b981;
+          color: white;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 10px;
           font-weight: 700;
-          font-size: 14px;
+          letter-spacing: 0.5px;
+        }
+
+        .award-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .action-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 8px 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 6px;
+        }
+
+        .action-text {
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 12px;
+          font-weight: 400;
+        }
+
+        .action-status {
+          font-size: 12px;
+          font-weight: 600;
+        }
+
+        .action-status.completed {
+          color: #10b981;
+        }
+
+        .action-status.pending {
+          color: #f59e0b;
         }
 
         .step-info {
@@ -1956,17 +2432,33 @@ const LandingPage = () => {
             font-size: 13px;
           }
 
-          .features-header h2 {
+          .results-header h2 {
             font-size: 36px;
           }
 
-          .features-grid {
+          .results-row {
             grid-template-columns: 1fr;
-            gap: 24px;
+            gap: 20px;
           }
 
-          .feature-card {
+          .result-card {
             padding: 24px;
+          }
+
+          .result-card.large {
+            grid-column: span 1;
+          }
+
+          .result-value {
+            font-size: 36px;
+          }
+
+          .chart-bars {
+            height: 60px;
+          }
+
+          .testimonial-content p {
+            font-size: 16px;
           }
 
           .cta-content {
