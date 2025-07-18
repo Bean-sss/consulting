@@ -81,6 +81,30 @@ const LandingPage = () => {
     return () => document.removeEventListener('click', handleToggleClick)
   }, [])
 
+  useEffect(() => {
+    const handleTabClick = (e) => {
+      const tabButton = e.target.closest('.tab-button')
+      if (tabButton) {
+        const target = tabButton.dataset.tab
+        
+        // Update active tab button
+        document.querySelectorAll('.tab-button').forEach(btn => {
+          btn.classList.remove('active')
+        })
+        tabButton.classList.add('active')
+        
+        // Update tab content visibility
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.remove('active')
+        })
+        document.getElementById(`${target}-tab`).classList.add('active')
+      }
+    }
+
+    document.addEventListener('click', handleTabClick)
+    return () => document.removeEventListener('click', handleTabClick)
+  }, [])
+
   const handleIndicatorClick = (index) => {
     if (index === currentVideoIndex) return
     
@@ -346,41 +370,145 @@ const LandingPage = () => {
         <div className="container">
           <div className="section-header">
             <h2>How It Works</h2>
-            <p>From RFP to award in three simple steps</p>
+            <p>Transform your procurement process in three powerful steps</p>
           </div>
-          <div className="process-timeline">
-            <div className="timeline-step">
-              <div className="step-number">1</div>
-              <div className="step-content">
-                <h3>Upload RFP</h3>
-                <p>Drop your RFP document and let our AI extract all key requirements automatically</p>
-                <div className="step-stat">
-                  <span className="stat-number">&lt; 2 min</span>
-                  <span className="stat-label">Average processing time</span>
+          <div className="process-card">
+            <div className="process-tabs">
+              <button className="tab-button active" data-tab="upload">
+                <span className="tab-number">01</span>
+                <span className="tab-label">Upload RFP</span>
+              </button>
+              <button className="tab-button" data-tab="analyze">
+                <span className="tab-number">02</span>
+                <span className="tab-label">AI Analysis</span>
+              </button>
+              <button className="tab-button" data-tab="award">
+                <span className="tab-number">03</span>
+                <span className="tab-label">Select & Award</span>
+              </button>
+            </div>
+            
+            <div className="tab-content active" id="upload-tab">
+              <div className="tab-panel">
+                <div className="step-visual">
+                  <div className="step-mockup">
+                    <div className="mockup-header">
+                      <div className="mockup-dot"></div>
+                      <div className="mockup-dot"></div>
+                      <div className="mockup-dot"></div>
+                      <span className="mockup-title">Document Upload</span>
+                    </div>
+                    <div className="mockup-content">
+                      <div className="upload-zone">
+                        <div className="upload-icon">📄</div>
+                        <div className="upload-text">RFP_Defense_Contract_2024.pdf</div>
+                        <div className="upload-progress">
+                          <div className="progress-bar"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="step-info">
+                  <div className="step-badge">
+                    <span className="step-number">01</span>
+                    <span className="step-label">UPLOAD</span>
+                  </div>
+                  <h3>Upload RFP</h3>
+                  <p>Drop your RFP document and watch our AI extract all key requirements automatically</p>
+                  <div className="step-metric">
+                    <span className="metric-value">&lt; 2 min</span>
+                    <span className="metric-label">Processing time</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="timeline-connector"></div>
-            <div className="timeline-step">
-              <div className="step-number">2</div>
-              <div className="step-content">
-                <h3>AI Analysis</h3>
-                <p>Our system matches requirements with qualified vendors based on capabilities and clearances</p>
-                <div className="step-stat">
-                  <span className="stat-number">94%</span>
-                  <span className="stat-label">Matching accuracy</span>
+
+            <div className="tab-content" id="analyze-tab">
+              <div className="tab-panel">
+                <div className="step-visual">
+                  <div className="step-mockup">
+                    <div className="mockup-header">
+                      <div className="mockup-dot"></div>
+                      <div className="mockup-dot"></div>
+                      <div className="mockup-dot"></div>
+                      <span className="mockup-title">AI Analysis Engine</span>
+                    </div>
+                    <div className="mockup-content">
+                      <div className="analysis-grid">
+                        <div className="analysis-item">
+                          <div className="analysis-icon">AI</div>
+                          <div className="analysis-text">Requirements extracted</div>
+                        </div>
+                        <div className="analysis-item">
+                          <div className="analysis-icon">ML</div>
+                          <div className="analysis-text">Vendors matched</div>
+                        </div>
+                        <div className="analysis-item">
+                          <div className="analysis-icon">OK</div>
+                          <div className="analysis-text">Clearances verified</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="step-info">
+                  <div className="step-badge">
+                    <span className="step-number">02</span>
+                    <span className="step-label">ANALYZE</span>
+                  </div>
+                  <h3>AI Analysis</h3>
+                  <p>Our system matches requirements with qualified vendors based on capabilities and clearances</p>
+                  <div className="step-metric">
+                    <span className="metric-value">94%</span>
+                    <span className="metric-label">Match accuracy</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="timeline-connector"></div>
-            <div className="timeline-step">
-              <div className="step-number">3</div>
-              <div className="step-content">
-                <h3>Select & Award</h3>
-                <p>Review ranked matches and connect with the best vendors for your project</p>
-                <div className="step-stat">
-                  <span className="stat-number">5×</span>
-                  <span className="stat-label">Faster than traditional</span>
+
+            <div className="tab-content" id="award-tab">
+              <div className="tab-panel">
+                <div className="step-visual">
+                  <div className="step-mockup">
+                    <div className="mockup-header">
+                      <div className="mockup-dot"></div>
+                      <div className="mockup-dot"></div>
+                      <div className="mockup-dot"></div>
+                      <span className="mockup-title">Award Dashboard</span>
+                    </div>
+                    <div className="mockup-content">
+                      <div className="award-list">
+                        <div className="award-item">
+                          <div className="award-rank">#1</div>
+                          <div className="award-vendor">TechCorp Solutions</div>
+                          <div className="award-score">96%</div>
+                        </div>
+                        <div className="award-item">
+                          <div className="award-rank">#2</div>
+                          <div className="award-vendor">Defense Systems Inc</div>
+                          <div className="award-score">92%</div>
+                        </div>
+                        <div className="award-item">
+                          <div className="award-rank">#3</div>
+                          <div className="award-vendor">Secure Tech Ltd</div>
+                          <div className="award-score">88%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="step-info">
+                  <div className="step-badge">
+                    <span className="step-number">03</span>
+                    <span className="step-label">AWARD</span>
+                  </div>
+                  <h3>Select & Award</h3>
+                  <p>Review ranked matches and connect with the best vendors for your project</p>
+                  <div className="step-metric">
+                    <span className="metric-value">5×</span>
+                    <span className="metric-label">Faster awards</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1030,6 +1158,7 @@ const LandingPage = () => {
           display: flex;
           flex-direction: column;
           gap: 4px;
+          align-items: flex-start;
         }
 
         .contract-title, .opportunity-title {
@@ -1321,10 +1450,11 @@ const LandingPage = () => {
           margin: 0;
         }
 
-                 .how-it-works {
-           padding: 120px 0;
-           background: white;
-         }
+        .how-it-works {
+          padding: 120px 0;
+          background: white;
+          color: #000;
+        }
 
         .how-it-works .section-header h2 {
           font-size: 48px;
@@ -1340,90 +1470,317 @@ const LandingPage = () => {
           margin: 0;
         }
 
-                 .process-timeline {
-           display: flex;
-           align-items: flex-start;
-           justify-content: center;
-           position: relative;
-           padding: 40px 0;
-           gap: 40px;
-         }
+        .process-card {
+          max-width: 1200px;
+          margin: 0 auto;
+          background: #1e2937;
+          border-radius: 20px;
+          padding: 0;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          overflow: hidden;
+        }
 
-         .timeline-step {
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           position: relative;
-           width: 300px;
-           text-align: center;
-         }
+        .process-tabs {
+          display: flex;
+          background: rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-         .timeline-step .step-number {
-           width: 60px;
-           height: 60px;
-           background: #dc2626;
-           border-radius: 50%;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           color: white;
-           font-size: 24px;
-           font-weight: bold;
-           margin: 0 0 20px 0;
-           box-shadow: 0 4px 10px rgba(220, 38, 38, 0.2);
-           position: relative;
-           z-index: 2;
-         }
+        .tab-button {
+          flex: 1;
+          padding: 24px;
+          border: none;
+          background: transparent;
+          color: rgba(255, 255, 255, 0.6);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border-bottom: 3px solid transparent;
+          position: relative;
+        }
 
-         .timeline-step .step-content h3 {
-           font-size: 24px;
-           font-weight: 600;
-           color: #000;
-           margin: 0 0 10px 0;
-           letter-spacing: -0.5px;
-         }
+        .tab-button:hover {
+          background: rgba(255, 255, 255, 0.05);
+          color: rgba(255, 255, 255, 0.8);
+        }
 
-         .timeline-step .step-content p {
-           font-size: 16px;
-           color: #666;
-           margin: 0 0 20px 0;
-           line-height: 1.5;
-         }
+        .tab-button.active {
+          color: white;
+          background: rgba(220, 38, 38, 0.1);
+          border-bottom-color: #dc2626;
+        }
 
-         .step-stat {
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           gap: 4px;
-           margin-top: 16px;
-         }
+        .tab-number {
+          display: block;
+          font-size: 16px;
+          font-weight: 700;
+          color: #dc2626;
+          margin-bottom: 8px;
+        }
 
-         .stat-number {
-           font-size: 28px;
-           font-weight: 700;
-           color: #dc2626;
-           letter-spacing: -0.5px;
-         }
-
-         .stat-label {
+        .tab-label {
+          display: block;
           font-size: 14px;
-           color: #666;
-           text-align: center;
-         }
+          font-weight: 600;
+          letter-spacing: 0.5px;
+        }
 
-         .timeline-connector {
-           width: 80px;
-           height: 2px;
-           background: #e6e6e6;
-           position: absolute;
-           top: 30px;
-           right: -60px;
-           z-index: 1;
-         }
+        .tab-content {
+          display: none;
+          padding: 40px;
+        }
 
-         .timeline-step:last-child .timeline-connector {
-           display: none;
-         }
+        .tab-content.active {
+          display: block;
+        }
+
+        .tab-panel {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: center;
+        }
+
+        .step-visual {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .step-mockup {
+          background: #1e2937;
+          border-radius: 16px;
+          padding: 20px;
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          width: 100%;
+          max-width: 400px;
+          transition: all 0.3s ease;
+        }
+
+        .step-mockup:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .mockup-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 20px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mockup-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.3);
+        }
+
+        .mockup-dot:first-child {
+          background: #ef4444;
+        }
+
+        .mockup-dot:nth-child(2) {
+          background: #f59e0b;
+        }
+
+        .mockup-dot:nth-child(3) {
+          background: #10b981;
+        }
+
+        .mockup-title {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 14px;
+          font-weight: 600;
+          margin-left: auto;
+        }
+
+        .mockup-content {
+          min-height: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .upload-zone {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          width: 100%;
+        }
+
+        .upload-icon {
+          font-size: 32px;
+          margin-bottom: 8px;
+        }
+
+        .upload-text {
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 13px;
+          text-align: center;
+        }
+
+        .upload-progress {
+          width: 100%;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 2px;
+          overflow: hidden;
+        }
+
+        .progress-bar {
+          width: 75%;
+          height: 100%;
+          background: linear-gradient(90deg, #10b981, #059669);
+          border-radius: 2px;
+          animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.7; }
+        }
+
+        .analysis-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          width: 100%;
+        }
+
+        .analysis-item {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          border-left: 3px solid #10b981;
+        }
+
+        .analysis-icon {
+          font-size: 12px;
+          font-weight: 700;
+          color: #10b981;
+          background: rgba(16, 185, 129, 0.1);
+          padding: 6px 8px;
+          border-radius: 4px;
+          min-width: 32px;
+          text-align: center;
+        }
+
+        .analysis-text {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 13px;
+          font-weight: 500;
+        }
+
+        .award-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          width: 100%;
+        }
+
+        .award-item {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          border-left: 3px solid #10b981;
+        }
+
+        .award-rank {
+          color: #10b981;
+          font-weight: 700;
+          font-size: 14px;
+          min-width: 24px;
+        }
+
+        .award-vendor {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 13px;
+          font-weight: 500;
+          flex: 1;
+        }
+
+        .award-score {
+          color: #10b981;
+          font-weight: 700;
+          font-size: 14px;
+        }
+
+        .step-info {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .step-badge {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .step-number {
+          font-size: 48px;
+          font-weight: 900;
+          color: #dc2626;
+          letter-spacing: -2px;
+          line-height: 1;
+        }
+
+        .step-label {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 2px;
+        }
+
+        .step-info h3 {
+          font-size: 32px;
+          font-weight: 700;
+          color: white;
+          margin: 0;
+          letter-spacing: -1px;
+        }
+
+        .step-info p {
+          font-size: 18px;
+          color: rgba(255, 255, 255, 0.8);
+          margin: 0;
+          line-height: 1.6;
+        }
+
+        .step-metric {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 20px;
+          background: rgba(220, 38, 38, 0.1);
+          border: 1px solid rgba(220, 38, 38, 0.3);
+          border-radius: 12px;
+          max-width: 200px;
+        }
+
+        .metric-value {
+          font-size: 32px;
+          font-weight: 700;
+          color: #dc2626;
+          letter-spacing: -1px;
+        }
+
+        .metric-label {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.7);
+          font-weight: 500;
+        }
 
                  .faq {
            padding: 120px 0;
@@ -1713,21 +2070,58 @@ const LandingPage = () => {
             font-size: 18px;
           }
 
-                     .process-timeline {
-             flex-direction: column;
-             align-items: center;
-             padding: 20px 0;
-             gap: 30px;
-           }
+          .process-card {
+            margin: 0 20px;
+          }
 
-           .timeline-step {
-             width: 100%;
-             margin-bottom: 0;
-           }
+          .process-tabs {
+            flex-direction: column;
+          }
 
-           .timeline-connector {
-             display: none;
-           }
+          .tab-button {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          .tab-button.active {
+            border-bottom-color: #dc2626;
+          }
+
+          .tab-content {
+            padding: 30px 20px;
+          }
+
+          .tab-panel {
+            grid-template-columns: 1fr;
+            gap: 30px;
+            text-align: center;
+          }
+
+          .step-mockup {
+            max-width: 320px;
+            margin: 0 auto;
+          }
+
+          .step-number {
+            font-size: 36px;
+          }
+
+          .step-info h3 {
+            font-size: 28px;
+          }
+
+          .step-info p {
+            font-size: 16px;
+          }
+
+          .step-metric {
+            margin: 0 auto;
+          }
+
+          .metric-value {
+            font-size: 28px;
+          }
 
           .faq .section-header h2 {
             font-size: 36px;
