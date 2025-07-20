@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-import { Badge } from './components/ui/badge'
-import { Upload, Users, BarChart3 } from 'lucide-react'
-import AutoFillRfpCard from "./components/AutoFillrfpCard"
 
 export function BenefitsSection() {
   const [extractedData, setExtractedData] = useState(null)

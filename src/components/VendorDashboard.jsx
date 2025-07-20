@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DashboardLayout from './DashboardLayout'
-import { mockRFPs, mockMatches, mockVendors } from '../data/mockData'
+import { useAuth } from '../context/AuthContext'
 
 const VendorDashboard = () => {
   const [activeTab, setActiveTab] = useState('matches')
+  const [rfpMatches, setRfpMatches] = useState([])
+  const [loading, setLoading] = useState(false)
+  const { user } = useAuth()
 
   const tabs = [
     { id: 'matches', label: 'Matches' },
@@ -12,74 +15,130 @@ const VendorDashboard = () => {
     { id: 'competitors', label: 'Competitors' }
   ]
 
-  const renderMatches = () => {
-    const matches = mockMatches.vendor.recommendedRFPs
-    const matchedRFPs = matches.map(match => ({
-      ...mockRFPs.find(rfp => rfp.id === match.rfpId),
-      ...match
-    }))
+  useEffect(() => {
+    if (activeTab === 'matches') {
+      fetchRfpMatches()
+    }
+  }, [activeTab])
 
+  const fetchRfpMatches = async () => {
+    try {
+      setLoading(true)
+      
+      // For demo, we'll use vendor ID 1 (CyberDefense Solutions)
+      // In a real app, this would come from the authenticated user
+      const vendorId = 1
+      
+      const response = await fetch(`http://localhost:3000/api/vendor/${vendorId}/recommendations?limit=20`)
+      const data = await response.json()
+      
+      if (response.ok) {
+        setRfpMatches(data.recommendations || [])
+      } else {
+        setRfpMatches([])
+      }
+    } catch (error) {
+      setRfpMatches([])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const renderMatches = () => {
     return (
       <div className="matches-section">
         <div className="section-header">
-          <h2>Recommended RFPs</h2>
-          <p>AI-powered matching based on your capabilities</p>
+          <h2>RFP Matches</h2>
+          <p>AI-powered RFP recommendations based on your capabilities</p>
         </div>
         
-        <div className="rfp-grid">
-          {matchedRFPs.map((rfp) => (
-            <div key={rfp.id} className="rfp-card">
-              <div className="rfp-header">
-                <div className="rfp-title-section">
-                  <h3>{rfp.title}</h3>
-                  <span className="rfp-number">{rfp.rfpNumber}</span>
-                </div>
-                <div className="match-score">
-                  <span className="score-value">{rfp.matchScore}%</span>
-                  <span className="score-label">match</span>
-                </div>
-              </div>
-              
-              <div className="rfp-details">
-                <div className="detail-grid">
-                  <div className="detail-item">
-                    <span className="label">Agency</span>
-                    <span className="value">{rfp.agency}</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="label">Budget</span>
-                    <span className="value">{rfp.budget}</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="label">Due Date</span>
-                    <span className="value">{rfp.dueDate}</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="label">Clearance</span>
-                    <span className="value">{rfp.clearanceRequired}</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="match-reasons">
-                <h4>Why you're a good fit</h4>
-                <ul>
-                  {rfp.reasons.map((reason, index) => (
-                    <li key={index}>{reason}</li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div className="rfp-footer">
-                <div className="win-info">
-                  <span className="win-probability">{rfp.winProbability}% win probability</span>
-                  <span className="competition-level">{rfp.competitionLevel} competition</span>
-                </div>
-                <button className="submit-btn">Submit Proposal</button>
-              </div>
+        {loading ? (
+          <div className="loading-message">Loading RFP recommendations...</div>
+        ) : rfpMatches.length === 0 ? (
+          <div className="no-matches">
+            <div className="no-matches-content">
+              <h3>No RFP Matches Found</h3>
+              <p>New RFPs that match your capabilities will appear here. Check back regularly for new opportunities.</p>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className="rfp-grid">
+            {rfpMatches.map((rfp, index) => {
+              const isTopMatch = index === 0 && rfp.score > 80
+              
+              return (
+                <div key={rfp.rfp_id} className={`rfp-card ${isTopMatch ? 'top-match' : ''}`}>
+                  {isTopMatch && (
+                    <div className="top-match-badge">
+                      BEST OPPORTUNITY
+                    </div>
+                  )}
+                  
+                  <div className="rfp-header">
+                    <div className="rfp-title-section">
+                      <h3>{rfp.project_title}</h3>
+                      <span className="rfp-number">{rfp.rfp_number}</span>
+                      <span className="agency">{rfp.agency}</span>
+                    </div>
+                    <div className="match-score">
+                      <span className="score-value">{rfp.score}%</span>
+                      <span className="score-label">match</span>
+                    </div>
+                  </div>
+                  
+                  <div className="rfp-details">
+                    <div className="detail-grid">
+                      <div className="detail-item">
+                        <span className="label">Budget</span>
+                        <span className="value">
+                          ${rfp.budget_min?.toLocaleString()} - ${rfp.budget_max?.toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="detail-item">
+                        <span className="label">Due Date</span>
+                        <span className="value">
+                          {new Date(rfp.due_date).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <div className="detail-item">
+                        <span className="label">Win Probability</span>
+                        <span className="value">{rfp.win_probability}%</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="rfp-requirements">
+                    <h4>Required Capabilities</h4>
+                    <div className="requirement-tags">
+                      {(rfp.required_capabilities || ['Cybersecurity', 'AI/ML', 'Software Development']).map((req, index) => (
+                        <span key={index} className="requirement-tag">{req}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rfp-clearance">
+                    <h4>Security Requirements</h4>
+                    <div className="clearance-info">
+                      <span className="clearance-badge">
+                        {rfp.security_clearance || 'None Required'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="rfp-footer">
+                    <div className="competition-info">
+                      <span className="win-probability">{rfp.win_probability}% Win Rate</span>
+                      <span className={`risk-badge risk-${rfp.risk_level}`}>
+                        {rfp.risk_level} risk
+                      </span>
+                    </div>
+                    <button className="submit-btn">Submit Proposal</button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
     )
   }
@@ -89,73 +148,25 @@ const VendorDashboard = () => {
       <div className="submit-section">
         <div className="section-header">
           <h2>Submit Proposal</h2>
-          <p>Submit a proposal for an active RFP</p>
+          <p>Submit a proposal for an active RFP (Demo Interface)</p>
         </div>
         
-        <div className="proposal-form">
-          <div className="form-section">
-            <h3>RFP Selection</h3>
-            <div className="form-group">
-              <label>Select RFP</label>
-              <select className="form-select">
-                <option value="">Choose an RFP...</option>
-                {mockRFPs.filter(rfp => rfp.status === 'Active').map(rfp => (
-                  <option key={rfp.id} value={rfp.id}>
-                    {rfp.rfpNumber} - {rfp.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+        <div className="demo-notice">
+          <h3>Proposal Submission</h3>
+          <p>This section would allow vendors to submit detailed proposals for RFPs. For the demo, this is a placeholder interface showing the proposal submission flow.</p>
           
-          <div className="form-section">
-            <h3>Proposal Details</h3>
-            <div className="form-row">
-              <div className="form-group">
-                <label>Proposed Budget</label>
-                <input type="text" className="form-input" placeholder="$0.00" />
-              </div>
-              <div className="form-group">
-                <label>Delivery Timeline</label>
-                <input type="text" className="form-input" placeholder="e.g., 6 months" />
-              </div>
+          <div className="demo-form">
+            <div className="form-preview">
+              <h4>Example Proposal Form Elements:</h4>
+              <ul>
+                <li>RFP Selection Dropdown</li>
+                <li>Technical Approach Description</li>
+                <li>Team Composition & Qualifications</li>
+                <li>Proposed Budget & Timeline</li>
+                <li>Supporting Documents Upload</li>
+                <li>Company Certifications & Past Performance</li>
+              </ul>
             </div>
-            
-            <div className="form-group">
-              <label>Technical Approach</label>
-              <textarea 
-                className="form-textarea" 
-                rows="4" 
-                placeholder="Describe your technical approach..."
-              />
-            </div>
-            
-            <div className="form-group">
-              <label>Team Composition</label>
-              <textarea 
-                className="form-textarea" 
-                rows="3" 
-                placeholder="Describe your team structure..."
-              />
-            </div>
-          </div>
-          
-          <div className="form-section">
-            <h3>Supporting Documents</h3>
-            <div className="form-group">
-              <div className="file-upload">
-                <input type="file" id="documents" multiple />
-                <label htmlFor="documents" className="upload-label">
-                  <span>Upload Files</span>
-                  <small>PDF, DOC, etc.</small>
-                </label>
-              </div>
-            </div>
-          </div>
-          
-          <div className="form-actions">
-            <button className="secondary-btn">Save Draft</button>
-            <button className="primary-btn">Submit Proposal</button>
           </div>
         </div>
       </div>
@@ -163,103 +174,58 @@ const VendorDashboard = () => {
   }
 
   const renderTracking = () => {
-    const submissions = [
-      { id: 1, rfpId: 1, status: 'Under Review', submittedDate: '2024-01-20', score: 92 },
-      { id: 2, rfpId: 2, status: 'Submitted', submittedDate: '2024-01-18', score: 88 },
-      { id: 3, rfpId: 3, status: 'Draft', submittedDate: '2024-01-15', score: 85 }
-    ]
-
     return (
       <div className="tracking-section">
         <div className="section-header">
-          <h2>Submissions</h2>
-          <p>Track your RFP submissions and their status</p>
+          <h2>Proposal Tracking</h2>
+          <p>Track your RFP submissions and their status (Demo Interface)</p>
         </div>
         
-        <div className="submissions-list">
-          {submissions.map(submission => {
-            const rfp = mockRFPs.find(r => r.id === submission.rfpId)
-            return (
-              <div key={submission.id} className="submission-card">
-                <div className="submission-header">
-                  <div className="submission-info">
-                    <h3>{rfp.title}</h3>
-                    <span className="submission-number">{rfp.rfpNumber}</span>
-                  </div>
-                  <div className="submission-status">
-                    <span className={`status-badge status-${submission.status.toLowerCase().replace(' ', '-')}`}>
-                      {submission.status}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="submission-details">
-                  <div className="detail-item">
-                    <span className="label">Submitted</span>
-                    <span className="value">{submission.submittedDate}</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="label">Match Score</span>
-                    <span className="value">{submission.score}%</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="label">Budget</span>
-                    <span className="value">{rfp.budget}</span>
-                  </div>
-                </div>
-                
-                <div className="submission-actions">
-                  <button className="action-btn">View Details</button>
-                  <button className="action-btn">Edit</button>
-                </div>
+        <div className="demo-notice">
+          <h3>Submission Tracking</h3>
+          <p>This section would show all submitted proposals with their current status, evaluation progress, and feedback from contracting officers.</p>
+          
+          <div className="tracking-preview">
+            <div className="submission-example">
+              <h4>Example Submission Statuses:</h4>
+              <div className="status-examples">
+                <span className="status-badge status-submitted">Submitted</span>
+                <span className="status-badge status-under-review">Under Review</span>
+                <span className="status-badge status-shortlisted">Shortlisted</span>
+                <span className="status-badge status-awarded">Awarded</span>
+                <span className="status-badge status-declined">Declined</span>
               </div>
-            )
-          })}
+            </div>
+          </div>
         </div>
       </div>
     )
   }
 
   const renderCompetitorAnalysis = () => {
-    const competitors = mockMatches.vendor.competitorAnalysis
-
     return (
-      <div className="competitor-section">
+      <div className="competitors-section">
         <div className="section-header">
           <h2>Competitor Analysis</h2>
-          <p>Understand your competition in the marketplace</p>
+          <p>Market intelligence and competitive insights (Demo Interface)</p>
         </div>
         
-        <div className="competitor-grid">
-          {competitors.map((competitor, index) => (
-            <div key={index} className="competitor-card">
-              <div className="competitor-header">
-                <h3>{competitor.name}</h3>
-                <span className={`threat-badge threat-${competitor.threat.toLowerCase()}`}>
-                  {competitor.threat} threat
-                </span>
-              </div>
-              
-              <div className="competitor-stats">
-                <div className="stat-item">
-                  <span className="stat-label">Shared RFPs</span>
-                  <span className="stat-value">{competitor.sharedRFPs}</span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-label">Est. Win Rate</span>
-                  <span className="stat-value">
-                    {competitor.threat === 'High' ? '78%' : '65%'}
-                  </span>
-                </div>
-                <div className="stat-item">
-                  <span className="stat-label">Avg. Bid</span>
-                  <span className="stat-value">
-                    {competitor.threat === 'High' ? '$3.2M' : '$4.1M'}
-                  </span>
-                </div>
-              </div>
+        <div className="demo-notice">
+          <h3>Competitive Intelligence</h3>
+          <p>This section would provide insights into market competition, competitor capabilities, pricing trends, and win/loss analysis to help optimize your proposals.</p>
+          
+          <div className="competitor-preview">
+            <div className="analysis-example">
+              <h4>Example Analysis Features:</h4>
+              <ul>
+                <li>Competitor capability mapping</li>
+                <li>Historical win rates by contract type</li>
+                <li>Pricing benchmarks and trends</li>
+                <li>Partnership opportunity identification</li>
+                <li>Market share analysis</li>
+              </ul>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     )
@@ -292,10 +258,12 @@ const VendorDashboard = () => {
       <style jsx>{`
         .section-header {
           margin-bottom: 32px;
+          border-bottom: 2px solid #f3f4f6;
+          padding-bottom: 16px;
         }
         
         .section-header h2 {
-          color: #000;
+          color: #111827;
           margin: 0 0 8px 0;
           font-size: 24px;
           font-weight: 600;
@@ -303,503 +271,370 @@ const VendorDashboard = () => {
         }
         
         .section-header p {
-          color: #666;
+          color: #6b7280;
           margin: 0;
           font-size: 16px;
         }
-        
+
+        .loading-message {
+          text-align: center;
+          padding: 48px;
+          color: #6b7280;
+          font-size: 16px;
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+        }
+
+        .no-matches {
+          text-align: center;
+          padding: 48px;
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+        }
+
+        .no-matches-content h3 {
+          margin: 0 0 8px 0;
+          color: #374151;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .no-matches-content p {
+          margin: 0;
+          color: #6b7280;
+          font-size: 14px;
+        }
+
         .rfp-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
           gap: 24px;
         }
-        
+
         .rfp-card {
           background: white;
-          border: 1px solid #e6e6e6;
-          border-radius: 12px;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
           padding: 24px;
-          transition: all 0.15s ease;
+          position: relative;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+          transition: all 0.2s ease;
         }
-        
+
         .rfp-card:hover {
-          border-color: #0070f3;
-          box-shadow: 0 4px 12px rgba(0, 112, 243, 0.1);
+          border-color: #2563eb;
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
         }
-        
+
+        .rfp-card.top-match {
+          border-color: #2563eb;
+          background: linear-gradient(to bottom right, #ffffff, #eff6ff);
+        }
+
+        .top-match-badge {
+          position: absolute;
+          top: -12px;
+          right: 16px;
+          background: #2563eb;
+          color: white;
+          padding: 6px 12px;
+          border-radius: 16px;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+        }
+
         .rfp-header {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
           margin-bottom: 24px;
         }
-        
+
         .rfp-title-section h3 {
-          color: #000;
+          color: #111827;
           margin: 0 0 4px 0;
           font-size: 18px;
           font-weight: 600;
           letter-spacing: -0.3px;
         }
-        
+
         .rfp-number {
-          color: #666;
+          color: #6b7280;
           font-size: 14px;
           font-weight: 500;
+          display: block;
+          margin-bottom: 4px;
         }
-        
+
+        .agency {
+          background: #eff6ff;
+          color: #2563eb;
+          padding: 4px 12px;
+          border-radius: 16px;
+          font-size: 12px;
+          font-weight: 500;
+          display: inline-block;
+        }
+
         .match-score {
           text-align: right;
-          flex-shrink: 0;
         }
-        
+
         .score-value {
           display: block;
-          font-size: 24px;
-          font-weight: 600;
-          color: #22c55e;
+          font-size: 28px;
+          font-weight: 700;
+          color: #2563eb;
           line-height: 1;
         }
-        
+
         .score-label {
+          display: block;
           font-size: 12px;
-          color: #666;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+          color: #6b7280;
+          margin-top: 4px;
         }
-        
+
         .rfp-details {
           margin-bottom: 24px;
         }
-        
+
         .detail-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(3, 1fr);
           gap: 16px;
+          padding: 16px;
+          background: #f9fafb;
+          border-radius: 6px;
         }
-        
+
         .detail-item {
           display: flex;
           flex-direction: column;
           gap: 4px;
         }
-        
+
         .detail-item .label {
-          color: #666;
           font-size: 12px;
+          color: #6b7280;
           font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
         }
-        
+
         .detail-item .value {
-          color: #000;
           font-size: 14px;
+          color: #111827;
           font-weight: 500;
         }
-        
-        .match-reasons {
+
+        .rfp-requirements,
+        .rfp-clearance {
           margin-bottom: 24px;
         }
-        
-        .match-reasons h4 {
-          color: #000;
+
+        .rfp-requirements h4,
+        .rfp-clearance h4 {
           margin: 0 0 12px 0;
           font-size: 14px;
           font-weight: 600;
+          color: #374151;
         }
-        
-        .match-reasons ul {
-          margin: 0;
-          padding: 0;
-          list-style: none;
+
+        .requirement-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
         }
-        
-        .match-reasons li {
-          color: #666;
-          font-size: 14px;
-          margin-bottom: 8px;
-          padding-left: 16px;
-          position: relative;
+
+        .requirement-tag {
+          background: #eff6ff;
+          color: #2563eb;
+          padding: 4px 12px;
+          border-radius: 16px;
+          font-size: 12px;
+          font-weight: 500;
         }
-        
-        .match-reasons li:before {
-          content: "•";
-          position: absolute;
-          left: 0;
-          color: #0070f3;
-          font-weight: bold;
+
+        .clearance-badge {
+          background: #f0fdf4;
+          color: #16a34a;
+          padding: 4px 12px;
+          border-radius: 16px;
+          font-size: 12px;
+          font-weight: 500;
+          display: inline-block;
         }
-        
+
         .rfp-footer {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding-top: 24px;
-          border-top: 1px solid #f0f0f0;
+          margin-top: 24px;
+          padding-top: 16px;
+          border-top: 1px solid #e5e7eb;
         }
-        
-        .win-info {
+
+        .competition-info {
           display: flex;
           flex-direction: column;
           gap: 4px;
         }
-        
+
         .win-probability {
           font-size: 14px;
-          color: #22c55e;
-          font-weight: 500;
+          font-weight: 600;
+          color: #16a34a;
         }
-        
-        .competition-level {
+
+        .risk-badge {
+          display: inline-block;
+          padding: 4px 12px;
+          border-radius: 16px;
           font-size: 12px;
-          color: #666;
+          font-weight: 500;
           text-transform: capitalize;
         }
-        
-        .submit-btn {
-          background: #0070f3;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          padding: 12px 16px;
-          font-size: 14px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.15s ease;
+
+        .risk-low {
+          background: #f0fdf4;
+          color: #16a34a;
         }
-        
-        .submit-btn:hover {
-          background: #0060d9;
+
+        .risk-medium {
+          background: #fff7ed;
+          color: #ea580c;
         }
-        
-        .proposal-form {
-          background: white;
-          border: 1px solid #e6e6e6;
-          border-radius: 12px;
-          padding: 32px;
-        }
-        
-        .form-section {
-          margin-bottom: 32px;
-        }
-        
-        .form-section:last-of-type {
-          margin-bottom: 0;
-        }
-        
-        .form-section h3 {
-          color: #000;
-          margin: 0 0 16px 0;
-          font-size: 16px;
-          font-weight: 600;
-          letter-spacing: -0.2px;
-        }
-        
-        .form-group {
-          margin-bottom: 16px;
-        }
-        
-        .form-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
-        }
-        
-        .form-group label {
-          display: block;
-          margin-bottom: 8px;
-          font-weight: 500;
-          color: #000;
-          font-size: 14px;
-        }
-        
-        .form-input,
-        .form-select,
-        .form-textarea {
-          width: 100%;
-          padding: 12px;
-          border: 1px solid #e6e6e6;
-          border-radius: 8px;
-          font-size: 14px;
-          transition: border-color 0.15s ease;
-          background: white;
-        }
-        
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-          outline: none;
-          border-color: #0070f3;
-        }
-        
-        .form-textarea {
-          resize: vertical;
-        }
-        
-        .file-upload {
-          border: 2px dashed #e6e6e6;
-          border-radius: 8px;
-          padding: 24px;
-          text-align: center;
-          transition: border-color 0.15s ease;
-        }
-        
-        .file-upload:hover {
-          border-color: #0070f3;
-        }
-        
-        .file-upload input[type="file"] {
-          display: none;
-        }
-        
-        .upload-label {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 4px;
-          cursor: pointer;
-          color: #0070f3;
-          font-weight: 500;
-        }
-        
-        .upload-label small {
-          color: #666;
-          font-size: 12px;
-        }
-        
-        .form-actions {
-          display: flex;
-          gap: 12px;
-          justify-content: flex-end;
-          margin-top: 32px;
-        }
-        
-        .secondary-btn {
-          background: #f5f5f5;
-          color: #666;
-          border: none;
-          border-radius: 8px;
-          padding: 12px 16px;
-          font-size: 14px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.15s ease;
-        }
-        
-        .secondary-btn:hover {
-          background: #e6e6e6;
-        }
-        
-        .primary-btn {
-          background: #0070f3;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          padding: 12px 16px;
-          font-size: 14px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.15s ease;
-        }
-        
-        .primary-btn:hover {
-          background: #0060d9;
-        }
-        
-        .submissions-list {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-        }
-        
-        .submission-card {
-          background: white;
-          border: 1px solid #e6e6e6;
-          border-radius: 12px;
-          padding: 24px;
-          transition: all 0.15s ease;
-        }
-        
-        .submission-card:hover {
-          border-color: #0070f3;
-          box-shadow: 0 4px 12px rgba(0, 112, 243, 0.1);
-        }
-        
-        .submission-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          margin-bottom: 16px;
-        }
-        
-        .submission-info h3 {
-          color: #000;
-          margin: 0 0 4px 0;
-          font-size: 16px;
-          font-weight: 600;
-          letter-spacing: -0.2px;
-        }
-        
-        .submission-number {
-          color: #666;
-          font-size: 12px;
-          font-weight: 500;
-        }
-        
-        .status-badge {
-          padding: 4px 8px;
-          border-radius: 6px;
-          font-size: 12px;
-          font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-        
-        .status-under-review {
-          background: #fef3c7;
-          color: #d97706;
-        }
-        
-        .status-submitted {
-          background: #dbeafe;
-          color: #2563eb;
-        }
-        
-        .status-draft {
-          background: #f3f4f6;
-          color: #6b7280;
-        }
-        
-        .submission-details {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-          gap: 16px;
-          margin-bottom: 16px;
-        }
-        
-        .submission-actions {
-          display: flex;
-          gap: 8px;
-        }
-        
-        .action-btn {
-          background: #f5f5f5;
-          color: #666;
-          border: none;
-          border-radius: 6px;
-          padding: 8px 12px;
-          font-size: 12px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.15s ease;
-        }
-        
-        .action-btn:hover {
-          background: #e6e6e6;
-        }
-        
-        .competitor-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 24px;
-        }
-        
-        .competitor-card {
-          background: white;
-          border: 1px solid #e6e6e6;
-          border-radius: 12px;
-          padding: 24px;
-          transition: all 0.15s ease;
-        }
-        
-        .competitor-card:hover {
-          border-color: #0070f3;
-          box-shadow: 0 4px 12px rgba(0, 112, 243, 0.1);
-        }
-        
-        .competitor-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 16px;
-        }
-        
-        .competitor-header h3 {
-          color: #000;
-          margin: 0;
-          font-size: 16px;
-          font-weight: 600;
-          letter-spacing: -0.2px;
-        }
-        
-        .threat-badge {
-          padding: 4px 8px;
-          border-radius: 6px;
-          font-size: 12px;
-          font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-        
-        .threat-high {
+
+        .risk-high {
           background: #fef2f2;
           color: #dc2626;
         }
-        
-        .threat-medium {
-          background: #fef3c7;
-          color: #d97706;
-        }
-        
-        .competitor-stats {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-        
-        .stat-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-        
-        .stat-label {
-          color: #666;
+
+        .submit-btn {
+          background: #2563eb;
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
           font-size: 14px;
-        }
-        
-        .stat-value {
           font-weight: 500;
-          color: #000;
-          font-size: 14px;
+          cursor: pointer;
+          transition: background 0.2s ease;
         }
-        
+
+        .submit-btn:hover {
+          background: #1d4ed8;
+        }
+
+        .demo-notice {
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          padding: 32px;
+          text-align: center;
+        }
+
+        .demo-notice h3 {
+          margin: 0 0 16px 0;
+          font-size: 20px;
+          font-weight: 600;
+          color: #111827;
+        }
+
+        .demo-notice p {
+          margin: 0 0 24px 0;
+          color: #6b7280;
+          font-size: 16px;
+        }
+
+        .demo-form,
+        .tracking-preview,
+        .competitor-preview {
+          background: #f9fafb;
+          border-radius: 6px;
+          padding: 24px;
+          text-align: left;
+        }
+
+        .form-preview h4,
+        .analysis-example h4 {
+          margin: 0 0 16px 0;
+          font-size: 16px;
+          font-weight: 600;
+          color: #111827;
+        }
+
+        .form-preview ul,
+        .analysis-example ul {
+          margin: 0;
+          padding-left: 20px;
+          list-style-type: disc;
+        }
+
+        .form-preview li,
+        .analysis-example li {
+          margin-bottom: 8px;
+          color: #4b5563;
+        }
+
+        .status-examples {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-top: 12px;
+        }
+
+        .status-badge {
+          padding: 4px 12px;
+          border-radius: 16px;
+          font-size: 12px;
+          font-weight: 500;
+        }
+
+        .status-submitted {
+          background: #e0f2fe;
+          color: #0277bd;
+        }
+
+        .status-under-review {
+          background: #fff7ed;
+          color: #ea580c;
+        }
+
+        .status-shortlisted {
+          background: #f0fdf4;
+          color: #16a34a;
+        }
+
+        .status-awarded {
+          background: #f0fdf4;
+          color: #16a34a;
+        }
+
+        .status-declined {
+          background: #fef2f2;
+          color: #dc2626;
+        }
+
         @media (max-width: 768px) {
           .rfp-grid {
             grid-template-columns: 1fr;
           }
-          
-          .form-row {
-            grid-template-columns: 1fr;
-          }
-          
+
           .detail-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, 1fr);
           }
-          
-          .competitor-grid {
-            grid-template-columns: 1fr;
-          }
-          
-          .submission-details {
-            grid-template-columns: 1fr;
-          }
-          
+
           .rfp-footer {
             flex-direction: column;
             gap: 16px;
             align-items: flex-start;
+          }
+
+          .submit-btn {
+            width: 100%;
           }
         }
       `}</style>

@@ -4,12 +4,12 @@
   "description": "AI-powered RFP analysis and vendor compatibility platform",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"vite\"",
-    "server": "node server/dist/index.js",
-    "build": "vite build && tsc --project server/config/tsconfig.json",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npx tsx index.ts",
+    "client": "vite",
+    "build": "vite build && cd server && npx tsc",
     "preview": "vite preview",
-    "start": "concurrently \"npm run server\" \"vite\"",
-    "test": "echo \"No tests configured yet\" && exit 0"
+    "seed-vendors": "node -e \"fetch('http://localhost:3000/api/seed-vendors', {method: 'POST'}).then(r => r.json()).then(console.log).catch(console.error)\""
   },
   "keywords": [
     "rfp",
@@ -26,7 +26,6 @@
     "@langchain/ollama": "^0.2.3",
     "@langchain/openai": "^0.6.1",
     "@supabase/supabase-js": "^2.39.3",
-    "axios": "^1.10.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
@@ -47,7 +46,9 @@
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
+    "axios": "^1.10.0",
     "concurrently": "^8.2.2",
+    "form-data": "^4.0.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vite": "^4.5.2"

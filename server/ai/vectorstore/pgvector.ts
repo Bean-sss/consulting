@@ -32,10 +32,7 @@ function getVectorStore(): SupabaseVectorStore {
           },
         }
       );
-      
-      console.log("Vector store initialized successfully");
     } catch (error) {
-      console.error("Failed to initialize vector store:", error);
       throw error;
     }
   }

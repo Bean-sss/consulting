@@ -73,7 +73,6 @@ export default function AutoFillRfpCard({ onDataExtracted }) {
         }, 200)
 
       } catch (err) {
-        console.error(err)
         setMessage("❌ Upload failed.")
         setIsProcessing(false)
         setProgress(0)

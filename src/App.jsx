@@ -1,3 +1,8 @@
+/**
+ * Main application component for the Defense RFP Platform
+ * Provides landing page and dashboard routing for vendors and contractors
+ */
+
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
