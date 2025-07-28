@@ -20,7 +20,7 @@ const Login = () => {
       <div className="login-content">
         <div className="login-header">
           <div className="logo">
-            <span className="logo-text">BID</span>
+            <span className="logo-text">DIB</span>
           </div>
           <h1>Welcome back</h1>
           <p>Choose your role to continue</p>

@@ -130,7 +130,7 @@ const LandingPage = () => {
           <div className="header-content">
             <div className="logo">
               <div className="logo-icon"></div>
-              <span className="logo-text">BID</span>
+              <span className="logo-text">DIB</span>
             </div>
             <nav>
               <ul className="nav">
@@ -230,7 +230,7 @@ const LandingPage = () => {
               <h2>Start winning more contracts</h2>
               <p>
                 Transform weeks of manual work into minutes of automated intelligence. 
-                Get started with BID today.
+                Get started with DIB today.
               </p>
               <div className="cta-buttons">
                 <a href="/login" className="cta-button primary">Get Started Free</a>
@@ -632,14 +632,14 @@ const LandingPage = () => {
                     <span className="detail-value">2-3 days</span>
                   </div>
                   <div className="detail-item">
-                    <span className="detail-label">With BID</span>
+                    <span className="detail-label">With DIB</span>
                     <span className="detail-value">4 hours</span>
                   </div>
                 </div>
               </div>
               <div className="result-card testimonial">
                 <div className="testimonial-content">
-                  <p>"BID reduced our procurement cycle from 8 weeks to 2 weeks. The ROI was immediate."</p>
+                  <p>"DIB reduced our procurement cycle from 8 weeks to 2 weeks. The ROI was immediate."</p>
                   <div className="testimonial-author">
                     <div className="author-info">
                       <span className="author-name">Sarah Chen</span>
@@ -717,7 +717,7 @@ const LandingPage = () => {
             <div className="footer-brand">
               <div className="brand-logo">
                 <div className="logo-icon"></div>
-              <span className="logo-text">BID</span>
+              <span className="logo-text">DIB</span>
               </div>
               <p>Streamlining defense procurement with secure, efficient RFP matching.</p>
             </div>
@@ -747,7 +747,7 @@ const LandingPage = () => {
           </div>
           <div className="footer-bottom">
             <div className="footer-bottom-content">
-            <p>&copy; 2024 BID. All rights reserved.</p>
+            <p>&copy; 2024 DIB. All rights reserved.</p>
               <div className="footer-badges">
                 <div className="badge">SOC 2 Certified</div>
                 <div className="badge">FedRAMP Authorized</div>

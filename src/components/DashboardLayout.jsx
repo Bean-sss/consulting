@@ -23,7 +23,7 @@ const DashboardLayout = ({ children, title, activeTab, onTabChange, tabs = [] })
         <div className="header-content">
           <div className="header-left">
             <div className="logo" onClick={handleLogoClick}>
-              <span className="logo-text">BID</span>
+              <span className="logo-text">DIB</span>
             </div>
             <div className="title-section">
               <h1>{title}</h1>
