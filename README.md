@@ -1,5 +1,7 @@
 # Defense RFP Platform
 
+NOTE - This is a prototype of the final product and doesn't consist of the best and full solution due to limited time. 
+
 An AI-powered platform for processing and analyzing defense RFP (Request for Proposal) documents with automated field extraction and vendor compatibility scoring.
 
 ## Prerequisites
